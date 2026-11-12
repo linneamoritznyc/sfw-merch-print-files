@@ -7,6 +7,7 @@ Every page stays a DRAFT until an SFW mentor has checked it.
 | No. | Organism | Script | Checked against |
 |---|---|---|---|
 | 1 | Euglypha (testate amoeba) | euglypha.py | Leidy 1879 pl. XXXV; protisten.de photos of E. tuberculata and E. filifera |
+| 3 | Fungal hyphae | fungi.py | standard mycology: septa, aseptate hyphae, clamp connections, look-alikes at one scale |
 | 2 | Bacterial-feeding nematode (rhabditid) | nematode.py | standard rhabditid anatomy; still to check against Cobb 1914 (USDA) and modern keys |
 
 Outputs in `out/`: full page SVG and PNG, a preview, and the end-on mouth as a standalone symmetric icon.
