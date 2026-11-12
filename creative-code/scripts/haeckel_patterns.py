@@ -24,7 +24,7 @@ FIGS = {1: (80, 150, 395, 605), 2: (365, 165, 545, 385), 3: (505, 170, 825, 612)
         9: (318, 912, 595, 1208), 10: (478, 765, 818, 1212), 11: (648, 1036, 828, 1214)}
 
 
-def cut(scan, n, max_side=1100):
+def cut(scan, n, max_side=2400):
     x0, y0, x1, y1 = [int(v * K) for v in FIGS[n]]
     crop = scan[y0:y1, x0:x1]
     g = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY).astype(np.float32)
