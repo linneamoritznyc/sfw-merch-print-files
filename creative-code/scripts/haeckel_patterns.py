@@ -42,7 +42,8 @@ def cut(scan, n, max_side=1100):
     for i in range(1, nlab):
         x, y, bw, bh, area = stats[i]
         touches = x == 0 or y == 0 or x + bw >= w or y + bh >= h
-        if i != keep and not touches and area > 40 and near[lab == i].any():
+        long_thin = max(bw, bh) / max(1, min(bw, bh)) > 2.2      # cilia and flagella; plate numbers are compact
+        if i != keep and not touches and area > 40 and long_thin and near[lab == i].any():
             m |= lab == i
     ink &= m
     ys, xs = np.nonzero(ink)
@@ -142,6 +143,37 @@ def h2_filled(figs, name, T=3000):
     return save(name, f'<svg xmlns="http://www.w3.org/2000/svg" width="{T}" height="{T}" viewBox="0 0 {T} {T}">\n' + "\n".join(body) + "\n</svg>\n", T)
 
 
+def patch(figs, ink_col, ground, name, W=3000, logo_frac=0.40, T=1000):
+    """Toile over a square panel with whole figures cleared from a centre patch and the white flower logo there."""
+    layout = [(6, .25, .27, 1150), (10, .74, .22, 1080), (8, .27, .76, 1080), (3, .76, .72, 1000),
+              (11, .51, .50, 330), (5, .99, .47, 300), (7, .51, .99, 300), (4, .02, .02, 300)]
+    k = T / 2400
+    body = [f'<rect width="{W}" height="{W}" fill="{C[ground]}"/>']
+    R = W * logo_frac * 0.47
+    c = W / 2
+    for ox in range(-T, W + T, T):
+        for oy in range(-T, W + T, T):
+            for n, fx, fy, hgt in layout:
+                f = figs[n]
+                h = hgt * k; s = h / f["ink"].shape[0]; w = f["ink"].shape[1] * s
+                x, y = ox + fx * T - w / 2, oy + fy * T - h / 2
+                if x > W or y > W or x + w < 0 or y + h < 0:
+                    continue
+                # nearest point of the figure box to the centre: drop the whole figure if it reaches the patch
+                nx, ny = min(max(c, x), x + w), min(max(c, y), y + h)
+                if math.hypot(nx - c, ny - c) < R:
+                    continue
+                body.append(f'<path transform="translate({x:.1f},{y:.1f}) scale({s:.4f})" d="{f["d_ink"]}" fill="{C[ink_col]}"/>')
+    svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{W}" viewBox="0 0 {W} {W}">\n' + "\n".join(body) + "\n</svg>\n"
+    open(os.path.join(OUT, f"{name}.svg"), "w").write(svg)
+    im = Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode(), output_width=W, output_height=W))).convert("RGBA")
+    logo = Image.open(os.path.join(HERE, "..", "logos", "SFW-logo-flower-white-3000.png")).convert("RGBA")
+    ls = int(W * logo_frac); logo = logo.resize((ls, ls), Image.LANCZOS)
+    im.alpha_composite(logo, ((W - ls) // 2, (W - ls) // 2))
+    im.convert("RGB").save(os.path.join(OUT, f"{name}.png"), dpi=(300, 300), optimize=True)
+    return im.convert("RGB")
+
+
 def main():
     Image.MAX_IMAGE_PIXELS = None
     scan = cv2.imread(sys.argv[1])
@@ -155,6 +187,8 @@ def main():
         a = (ink * 255).astype(np.uint8)
         rgba = np.dstack([np.full_like(a, 0x22), np.full_like(a, 0x37), np.full_like(a, 0x1F), a])
         Image.fromarray(rgba).save(os.path.join(PLATES, f"haeckel-1904-plate13-fig{n:02d}.png"))
+    pt = patch(figs, "white", "deep", "h1-haeckel-toile-patch-logo-white-on-deep")
+    t = pt.copy(); t.thumbnail((1200, 1200)); t.save(os.path.join(OUT, "h1-haeckel-toile-patch-logo-preview.png"))
     reps = [h1_plate(figs, "deep", "white", "h1-haeckel-toile-deep-on-white"),
             h1_plate(figs, "white", "deep", "h1-haeckel-toile-white-on-deep"),
             h1_plate(figs, "fwgreen", "white", "h1-haeckel-toile-fwgreen-on-white")]
