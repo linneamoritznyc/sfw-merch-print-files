@@ -176,7 +176,7 @@ def tile(seed, T=2400, bg=(30, 62, 46), n=70, avoid=('maroon',), out=None, big=1
     for r in sizes:
         for _ in range(2500):
             p = (rnd.uniform(0, T), rnd.uniform(0, T))
-            if all(tdist(p, (x, y)) > (r + q) * 1.02 + 30 for x, y, q in placed):
+            if all(tdist(p, (x, y)) > (r + q) * 1.02 + 30 * big for x, y, q in placed):
                 placed.append((p[0], p[1], r)); break
     order = list(range(len(KINDS))); rnd.shuffle(order)
     for i, (x, y, r) in enumerate(placed):
