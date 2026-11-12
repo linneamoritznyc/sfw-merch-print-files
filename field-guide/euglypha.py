@@ -313,9 +313,6 @@ def page():
         t, yl = para(lines, fs, fx + 220, y)
         body.append(t); y = yl + fs * 1.75
     # footer
-    body.append(f'<rect x="{M}" y="{H - 290}" width="{W - 2 * M}" height="3" fill="{LIGHT}"/>')
-    body.append(text("Drawn by the Soil Food Web Foundation. Checked against Leidy (1879), plate XXXV, and modern light-microscope photos.", 30, M, H - 220, color=DEEP)[0])
-    body.append(text("Draft. To be checked by an SFW mentor before publishing.", 30, M, H - 175, color=FWG)[0])
     return f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">\n' + "\n".join(body) + "\n</svg>\n"
 
 
