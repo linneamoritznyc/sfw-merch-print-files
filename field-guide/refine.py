@@ -413,5 +413,170 @@ def enchytraeid():
     save("potworm-enchytraeid", "".join(out), Wd, Ht)
 
 
+# ------------------------------------------------------------------ Chlamydomonas
+def chlamydomonas():
+    Wd, Ht = 900, 1250; cx, cy = 450, 760
+    out = []
+    for s_ in (-1, 1):                                                       # two equal flagella, breast-stroke pose
+        fl = smooth([(cx + s_ * 24, cy - 300), (cx + s_ * 120, cy - 430), (cx + s_ * 260, cy - 500), (cx + s_ * 330, cy - 640)], 80)
+        out.append(line(fl, MED * 1.1))
+    cell = Polygon(smooth([(cx, cy - 310), (cx + 180, cy - 230), (cx + 240, cy), (cx + 190, cy + 250), (cx, cy + 320), (cx - 190, cy + 250), (cx - 240, cy), (cx - 180, cy - 230)], 200, closed=True))
+    papilla = Point(cx, cy - 305).buffer(26)
+    out.append(shape(cell.union(papilla), fill=WHITE, w=HEAVY))
+    out.append(shape(cell.buffer(-12), fill="none", stroke=FWG, w=FINE))     # cell wall, double line
+    cup = cell.buffer(-26).difference(Polygon(smooth([(cx, cy - 330), (cx + 140, cy - 160), (cx + 130, cy + 40), (cx, cy + 120), (cx - 130, cy + 40), (cx - 140, cy - 160)], 120, closed=True)))
+    out.append(shape(cup, fill=WHITE, stroke=FWG, w=MED))
+    out.append(shade(cup, 2400, 2.2, c=FWG, light=(-.4, -.9), power=1.4))     # chloroplast, densely stippled
+    pyr = Point(cx, cy + 190).buffer(60)
+    out.append(shape(pyr, fill=WHITE, w=MED)); out.append(shape(pyr.buffer(-14).difference(pyr.buffer(-26)), fill=FWG, stroke=FWG, w=1))   # starch sheath
+    out.append(shade(pyr.buffer(-28), 40, 2, c=DEEP, power=.5))
+    nuc = Point(cx, cy - 40).buffer(70)
+    out.append(shape(nuc, fill=WHITE, w=MED)); out.append(shade(nuc, 160, 2, c=DEEP, power=1)); out.append(shape(Point(cx, cy - 40).buffer(22), fill=DEEP, stroke=DEEP, w=1))
+    out.append(f'<ellipse cx="{cx + 185:.1f}" cy="{cy - 100:.1f}" rx="16" ry="34" transform="rotate(18 {cx + 185} {cy - 100})" fill="#B8433A" stroke="{DEEP}" stroke-width="2"/>')
+    for s_ in (-1, 1):
+        out.append(shape(Point(cx + s_ * 46, cy - 250).buffer(20), fill=WHITE, stroke=DEEP, w=FINE))
+    save("alga-chlamydomonas", "".join(out), Wd, Ht)
+
+
+# ------------------------------------------------------------------ yeast, budding
+def yeast():
+    Wd, Ht = 1300, 1000
+    out = []
+    cells = [((430, 560), 190, 150, 15, [(270, 520), (330, 690)]), ((662, 432), 112, 90, -30, []), ((790, 362), 62, 50, -30, []),
+             ((345, 810), 104, 84, 70, []), ((960, 690), 170, 132, -5, [(1110, 640), (900, 570)])]
+    for (x, y), rx, ry, a, scars in cells:
+        e = Point(x, y).buffer(1)
+        from shapely import affinity
+        e = affinity.rotate(affinity.scale(Point(x, y).buffer(1, 64), rx, ry), a)
+        out.append(shape(e, fill=WHITE, w=HEAVY * .8))
+        out.append(shape(e.buffer(-10), fill="none", stroke=FWG, w=FINE))
+        out.append(shade(e.buffer(-12), int(rx * ry / 22), 2.1, light=(-.5, -.85)))
+        v = affinity.rotate(affinity.scale(Point(x + rx * .12, y - ry * .05).buffer(1, 48), rx * .38, ry * .4), a)
+        out.append(shape(v, fill=WHITE, stroke=DEEP, w=MED))
+        for _ in range(3):
+            g = Point(x + rng.uniform(-.3, .3) * rx, y + rng.uniform(-.25, .25) * ry).buffer(rng.uniform(7, 12))
+            if not g.intersects(v):
+                out.append(shape(g, fill=FWG, stroke=FWG, w=1))
+        for sx, sy in scars:
+            out.append(shape(Point(sx, sy).buffer(16).difference(Point(sx, sy).buffer(8)), fill=DEEP, stroke=DEEP, w=1))
+    save("yeast-budding", "".join(out), Wd, Ht)
+
+
+# ------------------------------------------------------------------ hypotrich ciliate (Oxytricha type), ventral view
+def hypotrich():
+    Wd, Ht = 1000, 1500; cx = 500
+    o = Polygon(smooth([(cx, 120), (cx + 210, 200), (cx + 270, 520), (cx + 250, 980), (cx + 170, 1290), (cx, 1350), (cx - 170, 1290), (cx - 250, 980), (cx - 270, 520), (cx - 210, 200)], 300, closed=True))
+    out = [shape(o, fill=WHITE, w=HEAVY)]
+    out.append(shade(o.buffer(-20), 3200, 2.1, light=(-.4, -.9)))
+    azm = smooth([(cx + 190, 230), (cx + 40, 150), (cx - 160, 200), (cx - 220, 400), (cx - 160, 560), (cx - 40, 600)], 160)
+    for i in range(0, len(azm) - 1, 2):                                      # adoral zone of membranelles: question-mark row of plates
+        p = np.array(azm[i]); q = np.array(azm[i + 1]); tt = (q - p) / (np.linalg.norm(q - p) + 1e-9); nn = np.array([tt[1], -tt[0]])
+        out.append(shape(tube([tuple(p - nn * 14), tuple(p + nn * 34)], 7, 4), fill=DEEP, stroke=DEEP, w=1))
+    buccal = Polygon(smooth([(cx - 40, 600), (cx + 10, 470), (cx + 60, 320), (cx + 110, 260), (cx + 90, 380), (cx + 30, 560)], 80, closed=True))
+    out.append(shape(buccal, fill=WHITE, stroke=DEEP, w=MED)); out.append(shade(buccal, 220, 2, power=.8))
+    def cirrus(x, y, L, a):
+        a = math.radians(a); tip = (x + L * math.cos(a), y + L * math.sin(a))
+        return shape(tube([(x, y), tip], 15, 4), fill=DEEP, stroke=DEEP, w=1)
+    for x, y in [(cx - 60, 250), (cx + 10, 235), (cx + 90, 262), (cx + 30, 320), (cx + 130, 330), (cx + 80, 390), (cx + 165, 440), (cx + 120, 495)]:
+        out.append(cirrus(x, y, 62, -100))                                   # 8 frontal cirri
+    for x, y in [(cx + 60, 680), (cx + 120, 740), (cx + 40, 800), (cx + 140, 850)]:
+        out.append(cirrus(x, y, 54, -95))                                    # 4 ventral cirri
+    for k in range(6):
+        out.append(cirrus(cx - 130 + k * 52, 1170 + abs(k - 2.5) * 12, 120, 86))   # 6 transverse cirri
+    for s_ in (-1, 1):                                                       # left and right marginal rows
+        for k in range(28):
+            y = 330 + k * 34
+            x = cx + s_ * (math.sqrt(max(0, 1 - ((y - 740) / 660) ** 2)) * 258 - 26)
+            out.append(cirrus(x, y, 42, 90 - s_ * 55))
+    for y in (580, 870):
+        mac = Polygon(smooth([(cx - 10, y - 100), (cx + 70, y - 60), (cx + 80, y + 50), (cx + 20, y + 100), (cx - 50, y + 50), (cx - 60, y - 50)], 80, closed=True))
+        out.append(shape(mac, fill=WHITE, w=MED)); out.append(shade(mac, 220, 2, c=DEEP, power=1))
+    out.append(shape(Point(cx - 190, 680).buffer(38), fill=WHITE, stroke=DEEP, w=MED))
+    for x, y, r in ((cx - 70, 790, 26), (cx - 140, 960, 22), (cx + 160, 1010, 24), (cx - 30, 1060, 20)):
+        out.append(shape(Point(x, y).buffer(r), fill=WHITE, stroke=FWG, w=FINE)); out.append(shade(Point(x, y).buffer(r - 3), 25, 2, power=.4))
+    save("ciliate-hypotrich-oxytricha", "".join(out), Wd, Ht)
+
+
+# ------------------------------------------------------------------ cercomonad flagellate
+def cercomonad():
+    Wd, Ht = 1500, 800
+    out = []
+    out.append(line(smooth([(470, 360), (380, 300), (280, 320), (180, 260), (70, 290)], 120), MED * 1.1))          # anterior flagellum
+    out.append(line(smooth([(480, 400), (600, 500), (820, 530), (1080, 500), (1400, 560)], 160), MED * 1.1))       # trailing flagellum under the cell
+    for a, L in ((-25, 230), (0, 260), (24, 220), (45, 170)):                 # filose pseudopods, branched
+        r = math.radians(a); p0 = np.array([880, 380]); p1 = p0 + L * np.array([math.cos(r), math.sin(r)])
+        out.append(line([tuple(p0), tuple(p1)], FINE, DEEP))
+        m = p0 + (p1 - p0) * .55
+        out.append(line([tuple(m), tuple(m + 70 * np.array([math.cos(r + .55), math.sin(r + .55)]))], 1.6))
+    cell = Polygon(smooth([(450, 380), (530, 260), (680, 225), (820, 270), (900, 370), (850, 470), (700, 510), (540, 490)], 220, closed=True))
+    out.append(shape(cell, fill=WHITE, w=HEAVY))
+    out.append(shade(cell.buffer(-10), 1500, 2.1, light=(-.4, -.9)))
+    nuc = Point(560, 360).buffer(50); out.append(shape(nuc, fill=WHITE, w=MED)); out.append(shape(Point(560, 360).buffer(20), fill=DEEP, stroke=DEEP, w=1))
+    out.append(shape(Point(520, 330).buffer(10), fill=DEEP, stroke=DEEP, w=1))                                          # basal bodies
+    for x, y, r in ((700, 330, 32), (760, 430, 24), (650, 440, 20)):
+        out.append(shape(Point(x, y).buffer(r), fill=WHITE, stroke=FWG, w=FINE)); out.append(shade(Point(x, y).buffer(r - 3), 30, 2, power=.4))
+    out.append(shape(Point(680, 270).buffer(20), fill=WHITE, stroke=DEEP, w=FINE))
+    save("flagellate-cercomonad", "".join(out), Wd, Ht)
+
+
+# ------------------------------------------------------------------ Fusarium spores
+def fusarium():
+    Wd, Ht = 1500, 900
+    out = []
+    def macro(x, y, L, rot, septa=5):
+        a = math.radians(rot); R = np.array([[math.cos(a), -math.sin(a)], [math.sin(a), math.cos(a)]])
+        v = np.linspace(-1, 1, 160)
+        mid = np.c_[L / 2 * v, -80 * (1 - v ** 2)]
+        th = 34 * (1 - np.abs(v) ** 2.4) + 3
+        tt = np.gradient(mid, axis=0); tt /= np.linalg.norm(tt, axis=1)[:, None]; nn = np.c_[-tt[:, 1], tt[:, 0]]
+        top, bot = mid + nn * th[:, None], mid - nn * th[:, None]
+        apex = mid[-1] + np.array([10, 10]); foot = mid[0] + np.array([-14, -2])
+        pts = np.vstack([top, [apex], bot[::-1], [foot + np.array([4, 10]), foot, foot + np.array([6, -10])]]) @ R.T + [x, y]
+        g = Polygon(pts).buffer(0)
+        o = shape(g, fill=WHITE, w=MED * 1.3) + shade(g, int(L * 1.6), 2, light=(-.3, -.95))
+        for k in range(1, septa + 1):
+            i = int(k / (septa + 1) * 159)
+            q = np.vstack([top[i], bot[i]]) @ R.T + [x, y]
+            o += line([tuple(q[0]), tuple(q[1])], MED, DEEP)
+        return o
+    out.append(macro(430, 320, 600, -8)); out.append(macro(980, 260, 520, 12, 4)); out.append(macro(720, 640, 640, -2))
+    ph = tube(smooth([(1180, 860), (1250, 740), (1300, 640)], 40), 30, 16)
+    out.append(shape(ph, fill=WHITE, w=MED)); out.append(shade(ph, 60, 2))
+    for x, y, a in ((1320, 590, 30), (1370, 640, -10), (1330, 530, 70), (1410, 570, 20), (1290, 470, 50)):
+        from shapely import affinity
+        e = affinity.rotate(affinity.scale(Point(x, y).buffer(1, 32), 26, 16), a)
+        out.append(shape(e, fill=WHITE, w=MED)); out.append(shade(e, 20, 1.8, power=.6))
+    save("fusarium-spores", "".join(out), Wd, Ht)
+
+
+# ------------------------------------------------------------------ Alternaria conidia in a chain
+def alternaria():
+    Wd, Ht = 800, 1400; cx = 400
+    out = []
+    ph = tube([(cx, 1380), (cx, 1180)], 36, 30)
+    out.append(shape(ph, fill="#7a5a58", w=MED)); out.append(line([(cx - 16, 1260), (cx + 16, 1260)], MED, WHITE))
+    y = 1180
+    for k, L in enumerate((290, 250, 210)):
+        top, bot = y - L, y
+        body = Polygon(smooth([(cx, bot), (cx + 80, bot - L * .2), (cx + 74, bot - L * .55), (cx + 30, bot - L * .8), (cx + 12, top + 10), (cx - 12, top + 10), (cx - 30, bot - L * .8), (cx - 74, bot - L * .55), (cx - 80, bot - L * .2)], 140, closed=True))
+        out.append(shape(body, fill="#7a5a58", stroke=DEEP, w=MED * 1.4))
+        out.append(shade(body, int(L * 2.2), 2.2, c=DEEP, light=(-.6, -.8), power=1.4))
+        rows = [bot - L * .8 * j / 6 for j in range(1, 6)]
+        for yy in rows:
+            seg = LineString([(cx - 120, yy), (cx + 120, yy)]).intersection(body.buffer(-4))
+            if seg.geom_type == "LineString":
+                out.append(line(list(seg.coords), MED, WHITE))
+        for j in range(5):
+            if j in (1, 3):
+                x0 = cx + (14 if j == 1 else -18)
+                out.append(line([(x0, rows[j]), (x0 + 4, rows[j - 1] if j else bot - 6)], MED, WHITE))
+            if j == 2:
+                out.append(line([(cx - 30, rows[2]), (cx - 24, rows[1])], MED, WHITE)); out.append(line([(cx + 30, rows[2]), (cx + 26, rows[1])], MED, WHITE))
+        out.append(shape(tube([(cx, top + 12), (cx, top - 10)], 18, 14), fill="#7a5a58", w=MED))   # beak
+        y = top - 6
+    save("alternaria-conidia-chain", "".join(out), Wd, Ht)
+
+
 if __name__ == "__main__":
     tardigrade(); pseudoscorpion(); rotifer(); predatory_mite(); paramecium(); earthworm(); enchytraeid()
+    chlamydomonas(); yeast(); hypotrich(); cercomonad(); fusarium(); alternaria()
