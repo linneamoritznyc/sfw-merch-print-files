@@ -41,9 +41,9 @@ def beanie_fill():
     sys.path.insert(0, os.path.join(HERE, "..", "fine-art"))
     import knit, cutouts
     g, body, stripe, line = knit.YARNS["Mite"]
-    sw = knit.render(knit.chart(cutouts.mite, 48, 60, (11, 10, 26)), [g, body, stripe, line], np.random.default_rng(5)).convert("RGB")
+    sw = knit.render(knit.chart(cutouts.mite, 48, 66, (7, 14, 34)), [g, body, stripe, line], np.random.default_rng(5)).convert("RGB")
     sw = sw.resize((int(sw.width * .32), int(sw.height * .32)), Image.LANCZOS)
-    f = Image.new("RGB", (C, C), g); f.paste(sw, (166, 113))
+    f = Image.new("RGB", (C, C), g); f.paste(sw, (166, 77))
     return f
 
 
