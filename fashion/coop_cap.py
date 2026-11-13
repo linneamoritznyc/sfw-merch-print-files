@@ -49,6 +49,24 @@ def embroidery(org, thread, line):
     return img
 
 
+LOGO = os.path.join(HERE, "..", "creative-code", "logos", "SFW-logo-flower-white-3000.png")
+
+
+def logo_embroidery(thread, line=None):
+    rng = np.random.default_rng(2)
+    lg = Image.open(LOGO).convert("RGBA"); bb = lg.getbbox(); lg = lg.crop(bb)
+    lg.thumbnail((EW, EH - (140 if line else 40)), Image.LANCZOS)
+    img = Image.new("RGBA", (EW, EH), (0, 0, 0, 0))
+    full = Image.new("RGBA", (EW, EH), (0, 0, 0, 0)); full.paste(lg, ((EW - lg.width) // 2, 10), lg)
+    m = np.asarray(full)[..., 3] > 110
+    img.alpha_composite(satin(m, thread, 35, rng))
+    if line:
+        c = "#%02x%02x%02x" % thread
+        t = svg(f'<text x="{EW / 2}" y="870" font-family="Liberation Serif" font-weight="bold" font-size="70" letter-spacing="10" text-anchor="middle" fill="{c}">{line}</text>')
+        img.alpha_composite(satin(np.asarray(t)[..., 3] > 120, thread, 90, rng))
+    return img
+
+
 def cap(fabric, emb, rope):
     W, H = 900, 760
     can = Image.new("RGB", (W, H), (240, 240, 238)); d = ImageDraw.Draw(can)
@@ -75,7 +93,7 @@ def main():
              ("Mycorrhizal root", "ROOT EXCHANGE", (34, 42, 60), (203, 219, 108), (60, 70, 90))]
     caps = []
     for org, line, fab, thr, rope in looks:
-        e = embroidery(org, thr, line); e.save(os.path.join(OUT, f"{org.lower().replace(' ', '-')}-embroidery.png"))
+        e = logo_embroidery(thr); e.save(os.path.join(OUT, f"logo-{'%02x%02x%02x' % fab}-embroidery.png"))
         caps.append(cap(fab, e, rope))
     sh = Image.new("RGB", (2 * 910 + 10, 2 * 770 + 10), "#fff")
     for i, c in enumerate(caps): sh.paste(c, (10 + (i % 2) * 910, 10 + (i // 2) * 770))
