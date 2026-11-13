@@ -19,7 +19,7 @@ _src = doodle.Crayon.line.__code__
 import types
 
 
-def wrapped_line(s, pts, w=15):
+def wrapped_line(s, pts, w=24):
     rng = s.rng; pts = np.asarray(pts, float)
     seg = np.linalg.norm(np.diff(pts, axis=0), axis=1); L = seg.sum()
     if L < 2: return
@@ -41,11 +41,11 @@ doodle.Crayon.line = wrapped_line
 
 def tile(seed, ink, paper):
     rng = np.random.default_rng(seed); c = doodle.Crayon(rng); c.m = np.zeros((T, T), np.float32)
-    for _ in range(6): doodle.hypha(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(0, 6.28), rng.uniform(600, 1000))
-    for _ in range(5): doodle.spiral(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(110, 200))
-    for _ in range(4): doodle.amoeba(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(90, 150))
-    for _ in range(4): doodle.urn(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(120, 180))
-    for _ in range(40):
+    for _ in range(3): doodle.hypha(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(0, 6.28), rng.uniform(900, 1300), 2)
+    for _ in range(2): doodle.spiral(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(180, 260))
+    for _ in range(2): doodle.amoeba(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(140, 200))
+    for _ in range(2): doodle.urn(c, rng.uniform(0, T), rng.uniform(0, T), rng.uniform(180, 240))
+    for _ in range(14):
         x, y, r = rng.uniform(0, T), rng.uniform(0, T), rng.uniform(14, 30)
         c.line([(x + r * np.cos(a), y + r * np.sin(a)) for a in np.linspace(0, 6.4, 24)], 14)
     return c.render(ink, paper)
@@ -58,7 +58,7 @@ def mockup(tiles):
     out = Image.new("RGB", (len(tiles) * (W + 20) + 20, H + 40), (230, 230, 228))
     for i, (way, t) in enumerate(tiles.items()):
         scale = 120 / T * 1.0                              # 8 in tile ~ 120 px when the legging is ~1000 px tall
-        tt = t.resize((max(1, int(T * scale * 2)), max(1, int(T * scale * 2))), Image.LANCZOS)
+        tt = t.resize((480, 480), Image.LANCZOS)
         fab = Image.new("RGB", (W, H))
         for x in range(0, W, tt.width):
             for y in range(0, H, tt.height): fab.paste(tt, (x, y))
