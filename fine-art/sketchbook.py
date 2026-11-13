@@ -148,7 +148,32 @@ def study(seed):
         d = ImageDraw.Draw(page); st = int(rng.choice([75, 90, 112]))
         for v in range(0, W, st): d.line([(v, 0), (v, H)], fill=(255, 255, 255, 120), width=1)
         for v in range(0, H, st): d.line([(0, v), (W, v)], fill=(255, 255, 255, 120), width=1)
-    if not under: page.alpha_composite(svg(body))
+    # 6. a cut-out organism
+    if rng.random() < .4:
+        import cutouts
+        name, fn, ink = cutouts.PICTOS[rng.integers(len(cutouts.PICTOS))]
+        sc = rng.uniform(.6, 1.4); x, y = rng.uniform(-60, W - 300), rng.uniform(-60, H - 300)
+        c = "#%02x%02x%02x" % COL[pal[rng.integers(len(pal))]]
+        page.alpha_composite(grain(svg(f'<g transform="translate({x},{y}) scale({sc})"><path d="{cutouts.d_of(fn())}" fill="{c}" fill-rule="evenodd"/></g>'), rng))
+    # 7. a second, smaller micrograph window
+    if rng.random() < .3:
+        ww, wh = int(rng.uniform(.2, .4) * W), int(rng.uniform(.15, .3) * H)
+        x, y = int(rng.uniform(0, W - ww)), int(rng.uniform(0, H - wh))
+        g2, _ = micro(rng, (ww, wh))
+        page.paste(treat(rng, g2, COL[pal[rng.integers(len(pal))]], COL[pal[rng.integers(len(pal))]]), (x, y), window(rng, ww, wh))
+    if not under:
+        if rng.random() < .3:   # off-register second pass of the type
+            sec = "#%02x%02x%02x" % COL[pal[rng.integers(len(pal))]]
+            page.alpha_composite(svg(f'<g transform="translate({rng.integers(-9, 9)},{rng.integers(-9, 9)})">' + body.replace(tcol, sec) + '</g>'))
+        page.alpha_composite(svg(body))
+    # 8. vertical dot labels
+    if rng.random() < .45:
+        lc = "#fff" if dark else tcol
+        lb = ""
+        for k in range(rng.integers(1, 4)):
+            x, y = rng.uniform(40, W - 40), rng.uniform(300, H - 60)
+            lb += f'<circle cx="{x}" cy="{y}" r="6" fill="{lc}"/><g transform="translate({x + 8},{y - 14}) rotate(-90)">' + text(["Soil Food Web", "400x", "observed in compost", "student micrograph", "field note"][rng.integers(5)], 22, 0, 0, color=lc)[0] + '</g>'
+        page.alpha_composite(svg(lb))
     return page.convert("RGB")
 
 
