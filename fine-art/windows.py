@@ -62,7 +62,7 @@ def study(seed, W=1800, H=1200):
     base = H * rng.uniform(.55, .8) / (1 if n < 3 else 1.15)
     x = W * rng.uniform(.04, .12); boxes = []
     for k in kinds:
-        sw, sh = SIZE[k]; w, h = int(base * sw), int(base * sh)
+        sw, sh = SIZE[k]; f = min(1, W * .8 / (base * sw), H * .9 / (base * sh)); w, h = int(base * sw * f), int(base * sh * f)
         y = int(H - h - H * rng.uniform(.06, .14)) if rng.random() < .7 else int((H - h) / 2)
         if x + w > W * .97: break
         page.paste(micro(rng, w, h), (int(x), y), window(k, w, h)); boxes.append((x, y, w, h))
