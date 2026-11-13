@@ -62,6 +62,44 @@ Linnea's boards for the SFW lifestyle line. Notes only, nothing designed from th
 - Colours: slate blue, moss, rust, mustard, cream.
 - Idea for SFW: our micrograph shapes as a flowing all-over fleece pattern.
 
+## Board 6: soilpunk (Pinterest)
+- Patched, layered field clothes: olive utility jackets, cargo shorts, balloon trousers, mixed plaid panels.
+- Spider graphic tee ("don't touch the..."), owl-print fleece jacket, embroidered flower jacket, crochet tops, striped knit socks.
+- Washed linen and corduroy caps, bandanas, beanies. Frog ring, sun earrings, mushroom basket, green wellies with frog faces.
+- "Soilpunk for a Regenerative Future": soil, worms, seeds, fungi and microbes at the centre. Stone spirals, mycorrhizal networks.
+- Shoes: hand-painted sneakers in moss and grass textures, rust, sky blue, mustard. Printful has canvas shoes and slides (not organic).
+
+## Board 7: solarpunk collage
+- Mustard line-art posters with sun rays, flowers and butterflies: "REFUSE DYSTOPIA", "Plant the seeds of change", "Solarpunk can happen. Now."
+- Moss growing through a keyboard, clover, a CD with moss, "NATURE IS GOD" carved stone, "I'D RATHER BE CONSUMED BY MOSS".
+- Hand-drawn slogans, sticker and collage feel. Colours: mustard, olive, moss, clover green.
+
+## Board 8: navy and teal
+- Navy knit top with a big cream spiral and arrow, small blue cross, red and white stripe, tiny printed alphabet.
+- Wide raw denim trousers. Dark green Camper Mary Janes with lime laces.
+- Sculptural silver necklace with green and red stones. Blue ceramic fish earrings.
+- Knit tee with a blue skater figure. Teal quilted fleece zip jacket. Striped blue-green ruched skirt.
+- Fuzzy brown and black striped beanie, olive waxed lunch bag, rust knit socks with a pocket.
+- Silver ring that says "talks to trees". Chunky tan, yellow and black sneakers.
+- Colours: navy, teal, olive, rust, cream, with yellow accents.
+- Ideas for SFW: one bold cream spiral on a dark knit (like the stone spiral embroidery). A small engraved line of text as jewellery ("talks to trees" → "talks to fungi").
+
+## Board 9: grass camo and panels
+- Reese Cooper hooded jacket and trousers: two-tone all-over print, dark green and off-white. It looks like a real photo of dry grass, reduced to two flat colours. Rough, hand-cut edges.
+- Olive shell jacket with off-white curved panels sweeping in from the sides. Tiny white cross on the chest, small circle logo on the sleeve.
+- Patchwork suede jacket: irregular shards in rust, teal, mustard, burgundy, navy.
+- Ideas for SFW: a two-tone hyphae camo made from the real fungal hyphae micrographs, green on off-white. That fits the organic joggers camo idea. A tiny white flower logo on the sleeve or chest only. Patchwork shards in soil colours.
+- Lesson from the embroidery round: she said "too computer". Avoid perfect geometry, drop shadows and clip-art shapes. Edges should look photographic or hand-made.
+
+## Board 10: topo quilted vest
+- Black quilted vest with thin light-grey stitched contour lines, like a topographic map. Lines are loose, uneven, wander off the edges.
+- Ideas for SFW: contour lines traced from a real micrograph (the nematode makes long parallel lines, the testate amoeba makes a round island). Stitched in one pale thread on black or dark green. Test: camo/topo.py.
+
+## Made so far from these boards
+- Fleece all-over pattern (liked): slate blue, moss, rust, mustard ribbons from a micrograph, with small ciliates. creative-code/patterns/SFW-fleece-pattern.png
+- Specimen patch for a brown tank: Sid Jensen stalked ciliate, 400x.
+- Embroidery set for organic caps and bucket hats (Econscious EC7000 cap, Organic Bucket Hat): ciliate, nematode, stone spiral, mushroom with mycelium, testate shell, SOILPUNK. creative-code/embroidery/
+
 ## Threads across all
 - Naturalist in the field: guides, tools, collecting, looking closely.
 - Earthy palette: brown, olive, moss, amber, rust. Cream shows up as the tee colour on boards 2 and 3.
