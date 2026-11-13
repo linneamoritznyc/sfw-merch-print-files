@@ -32,3 +32,14 @@ Each claim on the eight pages, the source checked, and the result.
 - No. 3 root hair: "about 10 µm or wider" changed to "about 10 to 17 µm" (Wikipedia, Root hair).
 
 Every fact on the pages now has a source. The drawings are SFW's own constructions.
+
+## Graphics set 2 (graphics_set2.py)
+| Graphic | Features checked | Source |
+|---|---|---|
+| Arcella from above | domed shell of hexagonal units, single central round aperture with collar | https://en.wikipedia.org/wiki/Arcella ; https://arcella.nl/arcella/ |
+| Difflugia | shell agglutinated from mineral grains from the soil, terminal aperture, finger-shaped lobopodia | https://arcella.nl/difflugia/ ; Leuckart & Nitsche wall chart III fig. 2, in Dolan 2023, Protist 174:125974, https://hal.science/hal-04162690v1/file/AcceptedWallChartMs.pdf |
+| Vorticella | bell-shaped body, peristome with oral cilia, C-shaped macronucleus, stalk with spasmoneme coiling into a helix | https://en.wikipedia.org/wiki/Vorticella ; https://web.nies.go.jp/chiiki1/protoz/morpho/ciliopho/vorticel.htm ; wall chart LXVII fig. 3 (Dolan 2023) |
+| Root-feeding nematode head | stylet with conus, shaft, three basal knobs; median bulb with valve | https://eppo.int/media/uploaded_images/ACTIVITIES/plant_quarantine/TD_1056_EPPO_Glossary_2023-05.pdf ; https://horizon.documentation.ird.fr/exl-doc/pleins_textes/2021-09/34397.pdf |
+| Mycorrhiza in root | intraradical hyphae, arbuscules in cortical cells, lipid vesicles, extraradical hyphae with large spores | https://www.davidmoore.org.uk/assets/mostly_mycology/diane_howarth/am.htm ; https://mycorrhizas.info/vam.html |
+| Penicillium | stipe, metulae, flask-shaped phialides, chains of round conidia, brush shape | https://www.adelaide.edu.au/mycology/fungal-descriptions-and-antifungal-susceptibility/hyphomycetes/penicillium |
+| Streptomyces | substrate mycelium, aerial hyphae, spiral spore chains | https://pmc.ncbi.nlm.nih.gov/articles/PMC3972883 ; https://pmc.ncbi.nlm.nih.gov/articles/PMC5945903/figure/F5 |
