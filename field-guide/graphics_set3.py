@@ -556,7 +556,7 @@ def nostoc():
 # ------------------------------------------------------------------ 20 Dictyostelium
 def dictyostelium():
     Wd, Ht = 1100, 1500; cx = 420
-    b = [P(smooth([(cx - 120, 1440), (cx - 60, 1400), (cx + 60, 1400), (cx + 120, 1440)], 40) + [(cx - 120, 1440)], fill=WHITE, w=LW * 1.4)]  # basal disc
+    b = [P(list(map(tuple, smooth([(cx - 120, 1440), (cx - 60, 1400), (cx + 60, 1400), (cx + 120, 1440)], 40))) + [(cx - 120, 1440)], fill=WHITE, w=LW * 1.4)]  # basal disc
     for k in range(50):                                                                       # tapering stalk of cells
         y = 1400 - k * 24; w = 30 - k * .38
         b.append(f'<rect x="{cx - w:.1f}" y="{y - 24:.1f}" width="{2 * w:.1f}" height="24" fill="{WHITE}" stroke="{DEEP}" stroke-width="2"/>')
@@ -569,7 +569,7 @@ def dictyostelium():
     slug = smooth([(620, 1400), (700, 1350), (900, 1340), (1040, 1360), (1060, 1400), (900, 1420), (700, 1430)], 120, closed=True)
     b.append(P(slug, fill=LIGHT, stroke=FWG, w=LW * 1.3))
     b.append(P(smooth([(620, 1430), (500, 1440), (380, 1450)], 30), close=False, w=3, stroke=FWG, extra=' stroke-dasharray="6 8"'))  # slime trail
-    save("slime-mould-dictyostelium", "".join(b), Wd, Ht)
+    save("slime-mould-dictyostelium", '<g transform="translate(0,100)">' + "".join(b) + "</g>", Wd, Ht + 100)
 
 
 def main():
