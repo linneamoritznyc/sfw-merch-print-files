@@ -58,3 +58,7 @@ Keep it fast. Many short rounds are better than one big round. Send a preview af
 
 - `files/` holds the final print files that are in Printful.
 - `creative-code/` holds the generators, source micrographs, patterns and the weekender design. Its README lists the key scripts.
+
+- Band and concert tees: never white. Black, grey, green or blue only.
+- Avoid looking "too computer": no perfect geometry, drop shadows or clip-art shapes.
+- Postcards are killed. Don't bring them back.
