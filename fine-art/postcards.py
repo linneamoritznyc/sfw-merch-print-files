@@ -88,7 +88,7 @@ def swiss():
     body += t(18, 560, 15, "No. 01")
     lines = ["A TESTATE AMOEBA", "IN ITS SHELL,", "FROM A SOIL SAMPLE.", "", "PHOTOGRAPHED BY", "ROBERT KENYON,", "SOIL FOOD WEB", "SCHOOL STUDENT."]
     for i, l in enumerate(lines): body += t(cw - 470 - 14, 540 + i * 19, 15, l)
-    body += f'<text x="14" y="{ch - 34}" font-family="Inter Display" font-weight="600" font-size="150" letter-spacing="-7" fill="#151515">Look Closer</text>'
+    body += f'<text x="14" y="{ch - 34}" font-family="Inter Display" font-weight="600" font-size="150" letter-spacing="-7" fill="#151515">Testate</text>'
     body += f'<text x="{cw - 14}" y="{ch - 34}" font-family="Inter Display" font-weight="600" font-size="150" letter-spacing="-6" text-anchor="end" fill="#151515">01</text>'
     card.alpha_composite(svg(body, cw, ch))
     page.alpha_composite(card, (cx, cy))
@@ -102,7 +102,7 @@ def back():
     for i in range(4): body += f'<line x1="{W / 2 + 80}" y1="{560 + i * 120}" x2="{W - 140}" y2="{560 + i * 120}" stroke="#151515" stroke-width="2"/>'
     body += f'<rect x="{W - 300}" y="140" width="160" height="200" fill="none" stroke="#151515" stroke-width="2" stroke-dasharray="8 6"/>'
     body += t(140, 180, 22, "SOIL FOOD WEB SCHOOL", wgt=600) + t(140, 212, 22, "Student micrographs")
-    body += t(140, H - 200, 26, "LOOK CLOSER", f="Courier 10 Pitch", wgt=400)
+    body += t(140, H - 200, 26, "STUDENT MICROGRAPHS", f="Courier 10 Pitch", wgt=400)
     body += t(140, H - 160, 20, "Photographs taken by students through the microscope.", wgt=400)
     body += t(140, H - 132, 20, "school.soilfoodweb.com", wgt=400)
     page.alpha_composite(svg(body))

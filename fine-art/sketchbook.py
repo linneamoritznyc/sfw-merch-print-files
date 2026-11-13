@@ -19,7 +19,7 @@ COL = {"lime": (203, 219, 108), "sage": (179, 190, 177), "cream": (243, 240, 230
        "light": (89, 166, 108), "teal": (30, 91, 76), "violet": (110, 90, 156), "lilac": (185, 169, 218), "black": (20, 20, 20),
        "white": (255, 255, 255), "brown": (107, 63, 30), "blue": (60, 111, 168), "pink": (240, 120, 150), "grey": (150, 152, 146)}
 GROUNDS = ["lime", "sage", "cream", "deep", "black", "violet", "white", "teal"]
-WORDS = ["PROTOZOA", "FUNGI", "NEMATODES", "BACTERIA", "SOIL", "HYPHAE", "AMOEBA", "LOOK CLOSER", "ALIVE", "MICROARTHROPODS", "TESTATE"]
+WORDS = ["PROTOZOA", "FUNGI", "NEMATODES", "BACTERIA", "SOIL", "HYPHAE", "AMOEBA", "ALIVE", "MICROARTHROPODS", "TESTATE"]
 SOURCES = [os.path.basename(f)[:-4] for f in glob.glob(os.path.join(SRC, "*.jpg"))]
 CREDIT = {"fungal-hypha-lee-kirk": "Lee Kirk", "fungal-spore-josia-martens": "Josia Martens", "mite-talbot-armstrong-i3": "Talbot Armstrong",
           "nematode-molting-cameron-radman": "Cameron Radman", "reproductive-structure-holly-bain": "Holly Bain",

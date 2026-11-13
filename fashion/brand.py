@@ -1,5 +1,5 @@
 """SFW core designs: print-ready art (transparent PNG, 3600 x 4800 = 12 x 16 in at 300 dpi) plus flat product mockups.
-  look-closer      stacked serif LOOK CLOSER, a halftone micrograph window cut into it            (tee back, tote)
+  look-closer      stacked serif TESTATE, a halftone micrograph window cut into it            (tee back, tote)
   specimen         small typed chest label + big halftone testate amoeba on the back             (tee)
   index            the soil food web cast: 8 cut-outs, numbered, named, field-guide grid         (tee back, poster, tote)
   topo             contour lines from a student micrograph, framed, with a typed caption          (tote, hoodie back)
@@ -53,8 +53,8 @@ def mono(t, x, y, s, c, anchor="start", ls=6):
 # ------------------------------------------------------------------ designs (return RGBA art for a given ink)
 def look_closer(ink):
     c = hexc(ink); body = ""
-    size = W * 1.0 / (text("LOOK CLOSER", 100, 0, 0)[1] / 100)
-    for i in range(7): body += text("LOOK CLOSER", size, W / 2, 520 + i * size * .9, anchor="middle", color=c, track=-10)[0]
+    size = W * 1.0 / (text("TESTATE", 100, 0, 0)[1] / 100)
+    for i in range(7): body += text("TESTATE", size, W / 2, 520 + i * size * .9, anchor="middle", color=c, track=-10)[0]
     art = svg_img(body)
     win = Image.new("L", (W, H), 0); ImageDraw.Draw(win).rounded_rectangle((900, 1300, 2700, 3700), radius=900, fill=255)
     art.paste((0, 0, 0, 0), (0, 0), win)                                 # cut a window out of the type

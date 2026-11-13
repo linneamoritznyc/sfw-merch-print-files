@@ -92,7 +92,7 @@ def patch(W=1100, H=640):
     for x in range(150, W - 140, 22): body += f'<path d="M{x},360 l6,-26 l6,26" fill="#156826"/>'
     body += f'<g transform="translate(250,400) scale(.28)"><path d="{cutouts.d_of(P["Nematode"]())}" fill="#F1ECDC"/></g>'
     body += f'<g transform="translate(620,395) scale(.3)"><path d="{cutouts.d_of(P["Fungal hyphae"]())}" fill="#E3D27A"/></g>'
-    body += text("LOOK CLOSER", 26, W / 2, 575, fnt="eb-garamond-latin-600-normal.woff2", anchor="middle", color="#2F5A2C", track=200)[0]
+    body += text("SOIL FOOD WEB", 26, W / 2, 575, fnt="eb-garamond-latin-600-normal.woff2", anchor="middle", color="#2F5A2C", track=200)[0]
     im = svg_img(body, W, H)
     a = np.asarray(im).astype(np.float32); yy = np.mgrid[0:H, 0:W][0]
     a[:, :, :3] *= (1 - .05 * (yy % 4 < 2))[:, :, None]                    # woven ribs
@@ -128,7 +128,7 @@ def seed_packet(W=800, H=1150):
     body = text("FUNGAL SPORES", 54, W / 2, 120, fnt="eb-garamond-latin-600-normal.woff2", anchor="middle", color="#22371F", track=160)[0]
     body += text("Field notes from the soil", 30, W / 2, 165, anchor="middle", color="#22371F")[0]
     body += f'<line x1="80" y1="870" x2="{W - 80}" y2="870" stroke="#22371F" stroke-width="2"/>'
-    for i, t in enumerate(["Fungal spores in a soil extract", "Student micrograph", "Look closer"]):
+    for i, t in enumerate(["Fungal spores in a soil extract", "Student micrograph", "Soil Food Web"]):
         body += f'<circle cx="96" cy="{925 + i * 52}" r="7" fill="#9B1D52"/>' + text(t, 32, 116, 936 + i * 52, color="#22371F")[0]
     body += text("SOIL FOOD WEB", 26, W / 2, H - 40, fnt="eb-garamond-latin-600-normal.woff2", anchor="middle", color="#22371F", track=260)[0]
     page.alpha_composite(svg_img(body, W, H))
