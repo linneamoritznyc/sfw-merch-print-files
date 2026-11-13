@@ -218,7 +218,82 @@ def rings_art():
     return art(1), art(2)
 
 
-CONCEPTS = {"horizons": horizons, "fieldmap": fieldmap_art, "doodle": doodle_art, "camo": camo_art, "knit": knit_art, "sketch": sketch_art, "contour": contour_art, "patchwork": patchwork_art, "squiggle": squiggle_art, "cracks": cracks_art, "chestband": chestband_art, "rings": rings_art}
+def _bez(P, n=300):
+    P = np.array(P, float); t = np.linspace(0, 1, n)[:, None]
+    return (1 - t) ** 3 * P[0] + 3 * (1 - t) ** 2 * t * P[1] + 3 * (1 - t) * t ** 2 * P[2] + t ** 3 * P[3]
+
+
+def _band(c, w0, wm, w1, peak=.3):
+    t = np.gradient(c, axis=0); t /= np.linalg.norm(t, axis=1)[:, None]; n = np.c_[-t[:, 1], t[:, 0]]
+    u = np.linspace(0, 1, len(c))
+    w = np.where(u < peak, w0 + (wm - w0) * np.sin(u / peak * math.pi / 2), w1 + (wm - w1) * np.cos((u - peak) / (1 - peak) * math.pi / 2))
+    return [tuple(p) for p in np.r_[c + n * w[:, None] / 2, (c - n * w[:, None] / 2)[::-1]]]
+
+
+def _halftone_fill(src, ink, paper, cell=14):
+    g = np.asarray(ImageOps.autocontrast(ImageOps.fit(Image.open(os.path.join(FA, "src", src + ".jpg")).convert("L"), (S, S)), cutoff=1), np.float32) / 255
+    g = np.clip((g - ndi.gaussian_filter(g, 200)) * 1.8 + .5, 0, 1)
+    yy, xx = np.mgrid[0:S, 0:S]
+    m = np.hypot((xx % cell) - cell / 2, (yy % cell) - cell / 2) < cell * .7 * np.sqrt(1 - g)
+    a = np.empty((S, S, 3), np.uint8); a[:] = paper; a[m] = ink
+    return Image.fromarray(a)
+
+
+def nematode_swoosh_art():
+    """One giant nematode wrapping across the jacket: blunt head at the left cuff, tail tapering at the right hip."""
+    def art(back):
+        page = Image.new("RGB", (S, S), (34, 55, 31))
+        c = _bez([(180, 2150), (150, 500), (2250, 1500), (2200, 250)] if not back else [(2220, 2150), (2250, 500), (150, 1500), (200, 250)])
+        poly = _band(c, 170, 300, 6, .12)
+        m = Image.new("L", (S, S), 0); ImageDraw.Draw(m).polygon(poly, fill=255)
+        page.paste(_halftone_fill("nematode-molting-cameron-radman", (34, 55, 31), (203, 219, 108)), (0, 0), m)
+        d = ImageDraw.Draw(page); d.line([tuple(p) for p in c[30:-40]], fill=(34, 55, 31), width=10)      # gut
+        d.ellipse(tuple(np.r_[c[45] - 40, c[45] + 40]), outline=(34, 55, 31), width=10)                     # pharyngeal bulb
+        d.polygon(poly, outline=(203, 219, 108), width=10)
+        return page
+    return art(False), art(True)
+
+
+def riso_swoosh_art():
+    """Black jacket; swooshes are windows into a riso-coloured micrograph (mint, lilac, lime)."""
+    sys.path.insert(0, FA); import overprint
+    def fill(src, box, inks):
+        g, d = overprint.load(src, box, (S, S)); mass, shade, edge = overprint.layers(g, d, 2.2)
+        return overprint.overprint([(shade, inks[0]), (mass, inks[1]), (edge, inks[2])], (S, S), (240, 236, 222), shift=8)
+    def art(back):
+        page = Image.new("RGB", (S, S), (20, 20, 20))
+        f = fill("testate-encysting-jimena-fuentes-i2" if back else "fungal-hypha-lee-kirk", None, ("mint", "violet", "yellow"))
+        m = Image.new("L", (S, S), 0); d = ImageDraw.Draw(m)
+        curves = ([[(300, 2200), (500, 900), (1500, 700), (2200, 300)], [(900, 2250), (1100, 1500), (1800, 1300), (2350, 1100)], [(100, 1300), (300, 700), (700, 450), (1100, 400)]]
+                  if not back else [[(200, 300), (900, 900), (1500, 900), (2300, 300)], [(150, 2250), (800, 1300), (1600, 1300), (2250, 2250)]])
+        for k, P in enumerate(curves):
+            d.polygon(_band(_bez(P), 14, [260, 180, 120][k % 3], 10, .4), fill=255)
+        page.paste(f, (0, 0), m)
+        return page
+    return art(False), art(True)
+
+
+def root_swoosh_art():
+    """Cream root swooshes growing out of the collar, forking and tapering, with spore dots at every tip."""
+    def art(back, seed):
+        rng = np.random.default_rng(seed); page = Image.new("RGB", (S, S), (79, 52, 51)); d = ImageDraw.Draw(page)
+        def grow(x, y, a, L, w, depth):
+            bnd = rng.normal(0, .18)
+            c = _bez([(x, y), (x + math.cos(a) * L * .4, y + math.sin(a) * L * .4), (x + math.cos(a + bnd) * L * .75, y + math.sin(a + bnd) * L * .75), (x + math.cos(a + bnd * .5) * L, y + math.sin(a + bnd * .5) * L)], 120)
+            d.polygon(_band(c, w, w * 1.15, 3, .2), fill=(233, 226, 204))
+            ex, ey = c[-1]; d.ellipse((ex - w * .5 - 4, ey - w * .5 - 4, ex + w * .5 + 4, ey + w * .5 + 4), fill=(203, 219, 108))
+            if depth:
+                for f in (.45, .75):
+                    bx, by = c[int(f * 119)]
+                    na = a + rng.choice([-1, 1]) * rng.uniform(.35, .7); na = min(max(na, .25), math.pi - .25); grow(bx, by, na, L * .55, w * .6, depth - 1)
+        for side in (1, -1):
+            grow(1200 + side * 60, 380, math.pi / 2 - side * .55, 1400, 70, 3)
+        if back: grow(1200, 300, math.pi / 2, 1500, 90, 3)
+        return page
+    return art(False, 1), art(True, 2)
+
+
+CONCEPTS = {"horizons": horizons, "fieldmap": fieldmap_art, "doodle": doodle_art, "camo": camo_art, "knit": knit_art, "sketch": sketch_art, "contour": contour_art, "patchwork": patchwork_art, "squiggle": squiggle_art, "cracks": cracks_art, "chestband": chestband_art, "rings": rings_art, "nematode-swoosh": nematode_swoosh_art, "riso-swoosh": riso_swoosh_art, "root-swoosh": root_swoosh_art}
 
 # ------------------------------------------------------------------ mockup: flat zip hoodie silhouette
 BODY = [(720, 360), (980, 280), (1420, 280), (1680, 360), (2020, 620), (2280, 1550), (2300, 2200), (2080, 2230), (1930, 1350),
@@ -246,15 +321,17 @@ def mock(art, front=True):
 def main():
     os.makedirs(OUT, exist_ok=True)
     rows = []
+    only = sys.argv[1:]
     for name, fn in CONCEPTS.items():
+        if only and name not in only: continue
         f, b = fn()
         f.save(os.path.join(OUT, f"{name}-front.png")); b.save(os.path.join(OUT, f"{name}-back.png"))
         row = Image.new("RGB", (2 * 600 + 10, 600), (228, 228, 226))
         row.paste(mock(f, True).resize((600, 600), Image.LANCZOS), (0, 0)); row.paste(mock(b, False).resize((600, 600), Image.LANCZOS), (610, 0))
         rows.append(row)
-    sheet = Image.new("RGB", (3 * 1220 + 10, 4 * 610 + 10), "#fff")
+    sheet = Image.new("RGB", (3 * 1220 + 10, ((len(rows) + 2) // 3) * 610 + 10), "#fff")
     for i, r in enumerate(rows): sheet.paste(r, (5 + (i % 3) * 1220, 5 + (i // 3) * 610))
-    sheet.save(os.path.join(OUT, "contact.jpg"), quality=88)
+    sheet.save(os.path.join(OUT, "contact-" + "-".join(only) + ".jpg" if only else "contact.jpg"), quality=88)
 
 
 if __name__ == "__main__":
