@@ -44,7 +44,7 @@ def make(ink=(110,40,46),name='SFW-concert-tee-lineup'):
     spaced(760,'LIVE',150,60,500)
     f=ImageFont.truetype(B+'ebg600.ttf',96)
     for i,m in enumerate(members):
-        nm=m[5]; tw=d.textlength(nm,font=f); d.text((x0+i*pw+(pw-tw)/2,y0+ph+40),nm,font=f,fill=ink+(255,))
+        pass
     rows=[(['BACTERIA','EARTHWORMS'],250,600,14,1.55),
           (['MYCORRHIZAL FUNGI','SPRINGTAILS','MITES'],150,600,9,1.6),
           (['FLAGELLATES','TARDIGRADES','ROTIFERS','ARCHAEA'],112,600,7,1.65),
@@ -52,7 +52,7 @@ def make(ink=(110,40,46),name='SFW-concert-tee-lineup'):
           ('AND INTRODUCING',56,500,22,1.9),
           (['TRICHODERMA','STREPTOMYCES','RHIZOBIUM','BACILLUS','MORTIERELLA'],64,500,5,1.7),
           (['ARTHROBOTRYS','COLPODA','VORTICELLA','ARCELLA','DIFFLUGIA','PROTURANS'],52,500,4,1.0)]
-    y=y0+ph+300; maxw=0.94*5*pw
+    y=y0+ph+190; maxw=0.94*5*pw
     for names,size,wt,sp,lh in rows:
         t=names if isinstance(names,str) else '  ·  '.join(names)
         while True:
