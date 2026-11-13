@@ -251,7 +251,7 @@ def page():
     body.append(text("C  What each group eats, read from the head", 40, M + 470, y3 + wd * 3.2 + 210, anchor="middle", fnt=G6)[0])
     # facts
     fx, fy, fs = 1260, 2470, 36
-    facts = [("Size", ["Most are 0.3 to 2 mm long."]),
+    facts = [("Size", ["Typically about 1 mm long and 50 µm wide."]),
              ("Where", ["Water films around soil particles,", "around roots and in compost."]),
              ("Eats", ["Bacteria, sucked in through the open", "mouth and crushed in the basal bulb."]),
              ("Role", ["It eats more nitrogen than it needs and", "releases the rest as ammonium, a form", "plant roots can take up."]),

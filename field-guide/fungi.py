@@ -144,7 +144,7 @@ def page():
     x0 = M
     items = [("Actinobacteria", 1.0, "About 1 to 1.5 µm. Much thinner,", "branches at sharp angles."),
              ("Fungal hypha", 5.0, "Often 4 to 6 µm. Even width,", "cross walls or none."),
-             ("Root hair", 12.0, "About 10 µm or wider. Grows", "out of a root, no branches.")]
+             ("Root hair", 14.0, "About 10 to 17 µm. Grows", "out of a root, no branches.")]
     for i, (name, wum, l1, l2) in enumerate(items):
         yy = yc + i * 165
         wpx = wum * um

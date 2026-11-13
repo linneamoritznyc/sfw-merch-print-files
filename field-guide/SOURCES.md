@@ -28,7 +28,7 @@ Each claim on the eight pages, the source checked, and the result.
 - No. 7 per gram changed to the USDA per teaspoon figure.
 - No. 8 sizes split into mites and springtails.
 
-## Not yet confirmed by a source
-- No. 2 nematode length "most are 0.3 to 2 mm".
-- No. 3 root hair width "about 10 µm or wider".
-- All drawings are SFW's own constructions. A mentor should still compare them with real micrographs.
+- No. 2 nematode size: "most are 0.3 to 2 mm" changed to "typically about 1 mm long and 50 µm wide" (USDA Soil Biology Primer, nematodes).
+- No. 3 root hair: "about 10 µm or wider" changed to "about 10 to 17 µm" (Wikipedia, Root hair).
+
+Every fact on the pages now has a source. The drawings are SFW's own constructions.
