@@ -63,8 +63,8 @@ def arcella(R):
         a = k / 24 * 2 * math.pi
         det.append(disc((R * .63 * math.cos(a), R * .63 * math.sin(a)), R * .045))
     det.append(ring((0, 0), R * .5, R * .05))
-    petal = Polygon([(0, R * .18), (R * .07, R * .3), (0, R * .44), (-R * .07, R * .3)])
-    det.append(radial(petal, 8))                             # crown of wedges round the aperture
+    teeth = Polygon([((R * .3 if k % 2 == 0 else R * .22) * math.cos(a), (R * .3 if k % 2 == 0 else R * .22) * math.sin(a)) for k, a in enumerate(np.linspace(0, 2 * math.pi, 40, endpoint=False))])
+    det.append(teeth.difference(disc((0, 0), R * .17)))           # toothed rim round the aperture
     det.append(ring((0, 0), R * .14, R * .04))
     det.append(disc((0, 0), R * .06))
     for k in range(18):                                       # dot in each scallop
@@ -112,6 +112,63 @@ def sun_star(R):
     return unary_union(g)
 
 
+def bezier(P0, P1, P2, P3, n=60):
+    t = np.linspace(0, 1, n)[:, None]
+    return (1 - t) ** 3 * np.array(P0) + 3 * (1 - t) ** 2 * t * np.array(P1) + 3 * (1 - t) * t ** 2 * np.array(P2) + t ** 3 * np.array(P3)
+
+
+def difflugia(L):
+    """Testate amoeba Difflugia: an urn-shaped shell built of sand grains, aperture at the top. Returns (body, detail)."""
+    t = np.linspace(0, 1, 60)
+    # right half profile from aperture (top) to fundus (bottom)
+    prof = np.r_[bezier((L * .14, -L * .5), (L * .12, -L * .3), (L * .42, -L * .2), (L * .38, L * .12)),
+                 bezier((L * .38, L * .12), (L * .36, L * .4), (L * .12, L * .52), (0, L * .5))]
+    body = Polygon(list(map(tuple, prof)) + [(-x, y) for x, y in prof[::-1]])
+    det = [line([(-L * .17, -L * .5), (L * .17, -L * .5)], L * .05)]
+    rng = np.random.default_rng(3)
+    pts = []
+    for _ in range(400):                                       # sand grains, mirrored
+        x, y = rng.uniform(.04, .34) * L, rng.uniform(-.3, .44) * L
+        r = rng.uniform(.018, .034) * L
+        if body.buffer(-L * .05).contains(Point(x, y)) and all((x - a) ** 2 + (y - b) ** 2 > (r + c + L * .012) ** 2 for a, b, c in pts):
+            pts.append((x, y, r))
+    for x, y, r in pts:
+        det += [disc((x, y), r), disc((-x, y), r)]
+    det.append(line([(0, -L * .44), (0, L * .44)], L * .02))
+    return body, unary_union(det)
+
+
+def nematode_curve(L, w):
+    """One nematode as a tapering S, head at the start."""
+    c = bezier((0, 0), (L * .45, -L * .05), (L * .1, L * .55), (L * .55, L * .7), 120)
+    parts = []
+    for i in range(len(c) - 1):
+        u = i / len(c)
+        ww = w * (.55 + .45 * math.sin(math.pi * min(1, u * 1.15)) ** .5) if u < .87 else w * (1 - (u - .87) / .13) * .9 + 1
+        parts.append(Point(c[i]).buffer(ww / 2, 8).union(Point(c[i + 1]).buffer(ww / 2, 8)).convex_hull)
+    return unary_union(parts), c
+
+
+def lyre(L, w):
+    """Two nematodes mirrored into a lyre around a spore column."""
+    g, c = nematode_curve(L, w)
+    g = affinity.translate(g, L * .08, -L * .35)
+    both = unary_union([g, affinity.scale(g, -1, 1, origin=(0, 0))])
+    dots = [disc((0, -L * .42 + k * L * .16), w * (.55 if k % 2 else .8)) for k in range(6)]
+    return both, unary_union(dots)
+
+
+def ogee(T, w):
+    """Wavy hyphae forming an ogee net through the repeat, with spores along them."""
+    g = []
+    for x0 in (-T / 2, 0, T / 2, T):
+        pts = [(x0 + T / 4 * math.sin(y / T * 2 * math.pi), y) for y in np.linspace(-T * .1, T * 1.1, 160)]
+        g.append(line(pts, w))
+        pts = [(x0 - T / 4 * math.sin(y / T * 2 * math.pi), y) for y in np.linspace(-T * .1, T * 1.1, 160)]
+        g.append(line(pts, w))
+    return unary_union(g)
+
+
 # ------------------------------------------------------------------ tiles
 def wrap(g, T):
     """Make g seamless in a T x T cell by adding wrapped copies, then clip to the cell."""
@@ -134,12 +191,12 @@ def medallion_tile():
     B, D, S = [], [], []
     for x, y in ((T / 4, T / 4), (3 * T / 4, 3 * T / 4)):        # half-drop
         B.append(at(body, x, y)); D.append(at(det, x, y))
-    sp = sprig(118, 10)
+    db, dd = difflugia(190)
     for x, y in ((3 * T / 4, T / 4), (T / 4, 3 * T / 4)):
-        S.append(at(sp, x, y))
-    for x, y in ((0, 0), (T / 2, 0), (0, T / 2), (T / 2, T / 2)):  # spore rosettes at the lattice points
-        S.append(at(unary_union([ring((0, 0), 26, 8), disc((0, 0), 9)] + [disc((44 * math.cos(a), 44 * math.sin(a)), 8) for a in np.linspace(0, 2 * math.pi, 8, endpoint=False)]), x, y))
-    return T, T, [("motif", wrap(unary_union(B), T)), ("detail", wrap(unary_union(D), T)), ("detail", wrap(unary_union(S), T))]
+        B.append(at(db, x, y)); D.append(at(dd, x, y))
+    for x, y in ((0, 0), (T / 2, 0), (0, T / 2), (T / 2, T / 2)):  # spore triplets where the cells meet
+        S.append(at(unary_union([disc((0, -26), 10), disc((0, 0), 13), disc((0, 26), 10)]), x, y))
+    return T, T, [("detail", wrap(unary_union(S), T)), ("motif", wrap(unary_union(B), T)), ("detail", wrap(unary_union(D), T))]
 
 
 def lattice_tile():
@@ -158,18 +215,23 @@ def lattice_tile():
 
 def tile_tile():
     T = 700
-    star = at(sun_star(250), T / 2, T / 2)
+    db, dd = difflugia(250)
+    ly, lyd = lyre(340, 20)
     dots = unary_union([disc((x, 0), 7) for x in np.arange(0, T, 28)] + [disc((0, y), 7) for y in np.arange(0, T, 28)])
-    corner = unary_union([at(radial(Polygon([(0, 0), (22, 8), (44, 0), (22, -8)]), 4), 0, 0)])
-    return T, T, [("motif", wrap(star, T)), ("detail", wrap(unary_union([dots, corner]), T))]
+    corner = unary_union([disc((0, 0), 18)] + [disc((dx, dy), 9) for dx, dy in ((34, 0), (-34, 0), (0, 34), (0, -34))])
+    M = unary_union([at(db, T / 2, T / 2 + 20), at(ly, T / 2, T / 2)])
+    return T, T, [("motif", wrap(M, T)), ("ground", wrap(at(dd, T / 2, T / 2 + 20), T)), ("detail", wrap(unary_union([dots, corner]), T))]
 
 
 def sprig_tile():
-    T = 500
-    sp = sprig(60, 6)
-    g = [at(sp, T / 4, T / 4), at(rot(sp, 45), 3 * T / 4, 3 * T / 4)]
-    d = [at(disc((0, 0), 9), 3 * T / 4, T / 4), at(disc((0, 0), 9), T / 4, 3 * T / 4)]
-    return T, T, [("motif", wrap(unary_union(g), T)), ("detail", wrap(unary_union(d), T))]
+    """Ditsy all-over: small Difflugia and nematode lyres, alternating up and down in a half-drop."""
+    T = 520
+    db, dd = difflugia(120)
+    ly, lyd = lyre(170, 9)
+    M = [at(db, T / 4, T / 4), at(rot(db, 180), 3 * T / 4, 3 * T / 4), at(ly, 3 * T / 4, T / 4), at(rot(ly, 180), T / 4, 3 * T / 4)]
+    G = [at(dd, T / 4, T / 4), at(rot(dd, 180), 3 * T / 4, 3 * T / 4)]
+    D = [at(lyd, 3 * T / 4, T / 4), at(rot(lyd, 180), T / 4, 3 * T / 4)]
+    return T, T, [("motif", wrap(unary_union(M), T)), ("ground", wrap(unary_union(G), T)), ("detail", wrap(unary_union(D), T))]
 
 
 def trim_tile():
