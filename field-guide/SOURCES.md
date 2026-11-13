@@ -43,3 +43,27 @@ Every fact on the pages now has a source. The drawings are SFW's own constructio
 | Mycorrhiza in root | intraradical hyphae, arbuscules in cortical cells, lipid vesicles, extraradical hyphae with large spores | https://www.davidmoore.org.uk/assets/mostly_mycology/diane_howarth/am.htm ; https://mycorrhizas.info/vam.html |
 | Penicillium | stipe, metulae, flask-shaped phialides, chains of round conidia, brush shape | https://www.adelaide.edu.au/mycology/fungal-descriptions-and-antifungal-susceptibility/hyphomycetes/penicillium |
 | Streptomyces | substrate mycelium, aerial hyphae, spiral spore chains | https://pmc.ncbi.nlm.nih.gov/articles/PMC3972883 ; https://pmc.ncbi.nlm.nih.gov/articles/PMC5945903/figure/F5 |
+
+## Graphics set 3 (graphics_set3.py)
+| Graphic | Features checked | Source |
+|---|---|---|
+| Bdelloid rotifer | ciliated corona (two wheels), mastax with trophi (jaws), head, trunk, foot with spurs and toes | https://en.wikipedia.org/wiki/Rotifer ; https://www.quekett.org/starting/microscopic-life/bdelloid-rotifers-old |
+| Tardigrade | four pairs of legs ending in claws, buccal tube, stylets, muscular pharyngeal bulb with placoids | https://encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/tardigrada-water-bears ; https://microbewiki.kenyon.edu/index.php/Tardigrade_Ecology |
+| Hypotrich ciliate (Oxytricha) | question-mark adoral zone of membranelles, 8 frontal, 4 ventral, 6 transverse cirri, marginal cirri rows | https://www.nies.go.jp/chiiki1/protoz/morpho/ciliopho/oxytrich.htm ; https://wikipedia.com/wiki/Hypotrich |
+| Centropyxis | discoid flattened shell, ventral anterior roundish aperture with invaginated lips, spines in some species | https://arcella.nl/centropyxis/ ; https://arcella.nl/centropyxis-key/ |
+| Trinema | shell of large circular plates with smaller plates between, circular aperture near one end ringed by minute scales | https://bioinfo.bioimages.org.uk/html/b157697.htm ; https://www.protisten.de/?p=15289 |
+| Cercomonad flagellate | two flagella, one forward, one trailing under the cell; filose pseudopods catch bacteria | https://www.zin.ru/journals/protistology/num3_1/karpov2.htm ; https://en.wikipedia.com/wiki/Filosa |
+| Mucor | aseptate hyphae, sporangiophore, sporangium, dome-shaped columella without apophysis | https://mycology.adelaide.edu.au/descriptions/zygomycetes/ ; https://mycology.adelaide.edu.au/glossary |
+| Aspergillus | conidiophore with foot cell, swollen vesicle, phialides, long chains of conidia | https://mycology.adelaide.edu.au/glossary ; https://cwoer.ccbcmd.edu/science/microbiology/lab manual/lab10/lab10.html |
+| Trichoderma | branched conidiophore, long tapering phialides, small terminal clusters of ovoid conidia | https://cales.arizona.edu/classes/plp427L/lab12.html |
+| Fusarium | multicelled sickle-shaped macroconidia with septa and foot cell, small microconidia | https://mycology.adelaide.edu.au/glossary ; https://www.adelaide.edu.au/mycology/ua/media/2229/hyalohyphomycetes.pdf |
+| Nematode-trapping fungus, net | Arthrobotrys forms adhesive networks | https://davidmoore.org.uk/21st_Century_Guidebook_to_Fungi_PLATINUM/Ch15_06.htm ; https://pmc.ncbi.nlm.nih.gov/articles/PMC4875469 |
+| Nematode-trapping fungus, ring | constricting ring of three cells that swell inward (Drechslerella) | https://pmc.ncbi.nlm.nih.gov/articles/PMC4875469 ; https://en.wikipedia.org/wiki/Arthrobotrys_dactyloides |
+| Ectomycorrhiza | fungal mantle around the root, Hartig net between root cells, never into the stele | https://en.wikipedia.org/wiki/Ectomycorrhiza ; https://davidmoore.org.uk/21st_Century_Guidebook_to_Fungi_PLATINUM/Ch13_15.htm |
+| Fungal-feeding nematode head | Aphelenchus: stylet without basal knobs, large metacorpus | https://nemaplex.ucdavis.edu/Taxadata/G012.aspx ; https://pmc.ncbi.nlm.nih.gov/articles/PMC2730191/figure/F3 |
+| Predatory nematode head | Mononchus: large buccal cavity about twice as long as wide, large anterior dorsal tooth | https://nemaplex.ucdavis.edu/Taxadata/Monoidae.aspx ; https://www.nies.go.jp/chiiki1/protoz/morpho/nematoda/n-mononc.htm |
+| Earthworm | segments, four pairs of setae per segment, clitellum, prostomium | https://commons.wvc.edu/dbennatt/html/animalbio/lab/somso%20animal%20models/Earthworm.doc ; USDA Soil Biology Primer, earthworms |
+| Root nodule section | infection thread, infected cells holding bacteroids in vesicles, uninfected cells between | https://digfir-published.macmillanusa.com/life11e/life11e_ch35_18.html |
+| Pinnularia | valve with raphe, central area and nodule, broad striae perpendicular to the raphe | https://researcharchive.calacademy.org/research/diatoms/genera/pinnularia/index.html ; https://micrographia.com/specbiol/alg/diato/diat0200.htm |
+| Nostoc | bead-like trichomes in a gelatinous sheath, intercalary heterocysts with thick walls, akinetes midway between heterocysts | https://fmp.conncoll.edu/Silicasecchidisk/LucidKeys3.5/Keys_v3.5/Carolina35_Key/Media/Html/Nostoc_Main.html ; https://pmc.ncbi.nlm.nih.gov/articles/PMC3911061/figure/F1 |
+| Dictyostelium | fruiting body: basal disc, stalk of cells, cup, sorus of spores; migrating slug stage | https://evodevojournal.biomedcentral.com/track/pdf/10.1186/2041-9139-5-34 ; https://www.frontiersin.org/journals/cell-and-developmental-biology/articles/10.3389/fcell.2021.692473/epub |
