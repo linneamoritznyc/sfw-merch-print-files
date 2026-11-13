@@ -66,3 +66,4 @@ Keep it fast. Many short rounds are better than one big round. Send a preview af
 - Festival lineup = real festival poster sizing: rows justified to full width, headliners huge, fewer words per row at the top.
 - Style she wants (poster grids 1-xx, flats board): giant EB Garamond words cropped or repeated in stacks, overlapping circles, arches and leaf shapes filled with duotone micrograph texture, grids, purple / greens / lime / lavender / brown / black / cream.
 - No photo credits printed on posters or art unless she asks.
+- Never knock a box or band out of art to fit text or a logo. Find a natural gap by moving or zooming the source.
