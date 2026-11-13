@@ -105,7 +105,7 @@ def fieldmap(name, W, H, word="SOIL", panels=None, base=("fungal-spores-in-suspe
     for i in (120, 260, 430):
         px, py = spine[i]; d.rectangle((px - 14, py - 9, px + 14, py + 9), fill=LIME + (255,), outline=INKG + (255,), width=3)
     # giant outline word
-    svg = text(word, int(W * .42), W / 2, H * .62, fnt="eb-garamond-latin-400-normal.woff2", anchor="middle", color="none", track=30)[0]
+    svg = '' if not word else text(word, int(W * .42), W / 2, H * .62, fnt="eb-garamond-latin-400-normal.woff2", anchor="middle", color="none", track=30)[0]
     svg = svg.replace('fill="none"', 'fill="none" stroke="#ffffff" stroke-width="5"')
     page.alpha_composite(svg_layer(W, H, svg))
     for p in panels or []:
