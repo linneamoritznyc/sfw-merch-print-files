@@ -95,6 +95,12 @@ Linnea's boards for the SFW lifestyle line. Notes only, nothing designed from th
 - Black quilted vest with thin light-grey stitched contour lines, like a topographic map. Lines are loose, uneven, wander off the edges.
 - Ideas for SFW: contour lines traced from a real micrograph (the nematode makes long parallel lines, the testate amoeba makes a round island). Stitched in one pale thread on black or dark green. Test: camo/topo.py.
 
+## Board 11: cut-paper collage
+- Torn cut-paper shapes in rust brown over periwinkle blue painted leaves, a speckled lily photo, dry black brush strokes, pale yellow-green.
+- Periwinkle and black camo blobs on rough linen.
+- Notebook covers (JACI): olive, tan, orange and lavender cut shapes, a black-ink botanical drawing, white seed dots, small sans wordmark.
+- Ideas for SFW: rust-brown torn shapes cut over a blue-tinted micrograph, black hyphae lines like brush strokes. Notebook covers in olive, lavender, orange with one black-ink organism.
+
 ## Made so far from these boards
 - Fleece all-over pattern (liked): slate blue, moss, rust, mustard ribbons from a micrograph, with small ciliates. creative-code/patterns/SFW-fleece-pattern.png
 - Specimen patch for a brown tank: Sid Jensen stalked ciliate, 400x.
