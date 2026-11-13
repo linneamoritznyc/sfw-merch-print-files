@@ -191,6 +191,51 @@ def ogee(T, w):
     return unary_union(g)
 
 
+def bell(L):
+    """One Vorticella zooid, mouth up, centred on its base at the origin. Returns (body, cut)."""
+    prof = bezier((L * .06, 0), (L * .1, -L * .2), (L * .42, -L * .45), (L * .4, -L * .72), 50)
+    body = Polygon(list(map(tuple, prof)) + [(-x, y) for x, y in prof[::-1]])
+    lip = affinity.scale(Point(0, -L * .74).buffer(1, 48), L * .46, L * .08)
+    cil = [line([(x, -L * .78), (x * 1.18, -L * .95)], L * .022) for x in np.linspace(-L * .4, L * .4, 11)]
+    body = unary_union([body, lip] + cil)
+    stripes = []                                                       # pellicle striations converging on the stalk
+    for f in (-.62, -.31, 0, .31, .62):
+        stripes.append(line(bezier((f * L * .1, -L * .12), (f * L * .16, -L * .3), (f * L * .36, -L * .5), (f * L * .4, -L * .62), 30), L * .022))
+    cut = unary_union(stripes + [line([(-L * .38, -L * .66), (L * .38, -L * .66)], L * .02)])
+    return body, cut
+
+
+def stalk(pts, w):
+    """Contractile stalk: a band with a zigzag spasmoneme cut through it."""
+    pts = np.asarray(pts, float)
+    band = line(pts, w)
+    t = np.gradient(pts, axis=0); t /= np.linalg.norm(t, axis=1)[:, None]; n = np.c_[-t[:, 1], t[:, 0]]
+    u = np.linspace(0, 1, len(pts))
+    L = np.sum(np.linalg.norm(np.diff(pts, axis=0), axis=1))
+    zz = pts + n * (w * .2 * np.sin(u * L / (w * 1.4) * 2 * math.pi))[:, None]
+    return band, LineString(zz).buffer(w * .07).intersection(band.buffer(-w * .12))
+
+
+def bouquet(L):
+    """Vorticellid colony as a symmetric bouquet: a stalk that forks twice, five bells. Returns (body, cut)."""
+    B, C = [], []
+    def put(base, ang, Ls):
+        b, c = bell(Ls)
+        B.append(at(rot(b, ang), *base)); C.append(at(rot(c, ang), *base))
+    main = bezier((0, L * .55), (0, L * .3), (0, L * .1), (0, -L * .05), 80)
+    for side in (1, -1):
+        br = bezier((0, L * .25), (side * L * .1, L * .12), (side * L * .26, L * .05), (side * L * .3, -L * .16), 80)
+        b2 = bezier((side * L * .17, L * .08), (side * L * .26, L * .14), (side * L * .46, L * .17), (side * L * .5, L * .02), 80)
+        for seg in (br, b2):
+            s1, s2 = stalk(seg, L * .045); B.append(s1); C.append(s2)
+        put(br[-1], side * 12, L * .32)
+        put(b2[-1], side * 26, L * .24)
+    s1, s2 = stalk(main, L * .055); B.append(s1); C.append(s2)
+    put(main[-1], 0, L * .36)
+    B.append(Polygon([(-L * .12, L * .6), (L * .12, L * .6), (L * .04, L * .54), (-L * .04, L * .54)]))   # holdfast
+    return unary_union(B), unary_union(C)
+
+
 # ------------------------------------------------------------------ tiles
 def wrap(g, T):
     """Make g seamless in a T x T cell by adding wrapped copies, then clip to the cell."""
@@ -236,23 +281,24 @@ def lattice_tile():
 
 
 def tile_tile():
+    """Knit-style tile: a vorticellid colony bouquet in a dotted frame, spore clusters at the corners."""
     T = 700
-    db, dd = difflugia(250)
-    ly, lyd = lyre(340, 20)
+    bb, bc = bouquet(430)
     dots = unary_union([disc((x, 0), 7) for x in np.arange(0, T, 28)] + [disc((0, y), 7) for y in np.arange(0, T, 28)])
     corner = unary_union([disc((0, 0), 18)] + [disc((dx, dy), 9) for dx, dy in ((34, 0), (-34, 0), (0, 34), (0, -34))])
-    M = unary_union([at(db, T / 2, T / 2 + 20), at(ly, T / 2, T / 2)])
-    return T, T, [("motif", wrap(M, T)), ("ground", wrap(at(dd, T / 2, T / 2 + 20), T)), ("detail", wrap(unary_union([dots, corner]), T))]
+    return T, T, [("motif", wrap(at(bb, T / 2, T / 2 - 10), T)), ("ground", wrap(at(bc, T / 2, T / 2 - 10), T)), ("detail", wrap(unary_union([dots, corner]), T))]
 
 
 def sprig_tile():
-    """Ditsy all-over: small Difflugia and nematode lyres, alternating up and down in a half-drop."""
-    T = 520
+    """Ditsy all-over: single stalked bells and Difflugia urns in a half-drop, all mouths up."""
+    T = 460
     db, dd = difflugia(120)
-    ly, lyd = lyre(170, 9)
-    M = [at(db, T / 4, T / 4), at(rot(db, 180), 3 * T / 4, 3 * T / 4), at(ly, 3 * T / 4, T / 4), at(rot(ly, 180), T / 4, 3 * T / 4)]
-    G = [at(dd, T / 4, T / 4), at(rot(dd, 180), 3 * T / 4, 3 * T / 4)]
-    D = [at(lyd, 3 * T / 4, T / 4), at(rot(lyd, 180), T / 4, 3 * T / 4)]
+    b, c = bell(120)
+    s1, s2 = stalk(bezier((0, 70), (0, 40), (0, 20), (0, 0), 20), 8)
+    bl, blc = unary_union([b, s1]), unary_union([c, s2])
+    M = [at(bl, T / 4, T / 4 + 30), at(db, 3 * T / 4, T / 4), at(bl, 3 * T / 4, 3 * T / 4 + 30), at(db, T / 4, 3 * T / 4)]
+    G = [at(blc, T / 4, T / 4 + 30), at(dd, 3 * T / 4, T / 4), at(blc, 3 * T / 4, 3 * T / 4 + 30), at(dd, T / 4, 3 * T / 4)]
+    D = [at(unary_union([disc((0, -14), 6), disc((0, 0), 8), disc((0, 14), 6)]), x, y) for x, y in ((T / 2, T / 2), (0, 0), (T / 2, 0), (0, T / 2))]
     return T, T, [("motif", wrap(unary_union(M), T)), ("ground", wrap(unary_union(G), T)), ("detail", wrap(unary_union(D), T))]
 
 
