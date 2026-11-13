@@ -250,8 +250,8 @@ def root_knot():
     b = []                                                                             # no root block: transparent like the rest
     body = Polygon(smooth([(520, 220), (560, 330), (700, 420), (790, 600), (740, 800), (540, 880), (340, 800), (290, 600), (380, 420), (480, 330)], 200, closed=True))
     b.append(outline(body, fill=WHITE, stroke=DEEP, w=LW * 1.8))
-    b.append(P([(500, 230), (500, 300)], close=False, w=6))                                        # stylet in the neck
-    b.append(ellipse(500, 360, 28, 22, fill=WHITE, w=LW))                                          # median bulb
+    b.append(P([(520, 240), (520, 300)], close=False, w=6))                                        # stylet in the neck
+    b.append(ellipse(520, 360, 28, 22, fill=WHITE, w=LW))                                          # median bulb
     for _ in range(14):                                                                            # giant feeding cells around the head
         pass
     for x, y in ((380, 210), (640, 230), (470, 120)):
