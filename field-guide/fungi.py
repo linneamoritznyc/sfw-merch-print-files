@@ -161,7 +161,7 @@ def page():
         body.append(text(l1 + " " + l2, 32, x0 + 870, yy + 38)[0])
     body.append(f'<rect x="{x0 + 690:.1f}" y="{yc + 470:.1f}" width="{10 * um:.1f}" height="10" fill="{DEEP}"/>')
     body.append(text("10 µm", 32, x0 + 690 + 5 * um, yc + 455, anchor="middle")[0])
-    body.append(text("C  Do not confuse it with, drawn at the same scale", 40, W / 2, yc + 570, anchor="middle", fnt=G6)[0])
+    body.append(text("C  Easy to mix up: all three at the same size", 40, W / 2, yc + 570, anchor="middle", fnt=G6)[0])
     # facts
     fy, fs = 3200, 34
     facts = [("Eats", "Dead plant material, even tough lignin and cellulose. Mycorrhizal fungi get sugars from roots."),
