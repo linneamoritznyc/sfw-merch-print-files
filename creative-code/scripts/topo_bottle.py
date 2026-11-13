@@ -21,7 +21,7 @@ def draw(g,S,lw):
     return im,d
 f1=ImageFont.truetype('/home/claude/merch/brand/ebg600.ttf',62)
 t='SOIL FOOD WEB'; sp=10
-tw=int(sum(f1.getlength(ch) for ch in t)+sp*(len(t)-1)); th=70; pad=30
+LOGO=Image.open('/home/claude/merch/logos/SFW-logo-flower-white-3000.png').convert('RGBA'); LOGO.thumbnail((300,300),Image.LANCZOS); tw,th=LOGO.size; pad=40
 best=None
 for zoom in (1.0,1.15,1.3,1.5):
   for fx in np.linspace(0,1,9):
@@ -36,9 +36,8 @@ for zoom in (1.0,1.15,1.3,1.5):
 print(best)
 zoom,fx,fy,yy,_,xx=best
 g=field(zoom,fx,fy); S=3; im,d=draw(g,S,8)
-f=ImageFont.truetype('/home/claude/merch/brand/ebg600.ttf',62*S); x=xx*4*S; y=yy*4*S
-for ch in t: d.text((x,y),ch,font=f,fill=255); x+=d.textlength(ch,font=f)+sp*S
 a=im.resize((W,H),Image.LANCZOS).point(lambda v:255 if v>110 else 0)
 out=Image.new('RGBA',(W,H),(255,255,255,0)); out.putalpha(a)
+out.alpha_composite(LOGO,(xx*4,yy*4))
 out.save('SFW-topo-bottle-wrap.png',icc_profile=ICC,dpi=(300,300))
 p=Image.new('RGB',(W,H),(28,28,28)); p.paste(out,(0,0),out); p.resize((W//3,H//3)).save('/tmp/bottle-black.jpg')
