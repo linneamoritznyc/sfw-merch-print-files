@@ -247,12 +247,7 @@ def pythium():
 # 13 Root-knot nematode female: white, pear-shaped, prominent neck, embedded in a root
 def root_knot():
     Wd, Ht = 1100, 1000
-    b = [f'<rect x="20" y="40" width="1060" height="900" rx="80" fill="{LIGHT}" stroke="{FWG}" stroke-width="{LW * 1.5}"/>']
-    for gx in range(60, 1060, 120):
-        for gy in range(80, 880, 100):
-            x = gx + (60 if (gy // 100) % 2 else 0)
-            if x + 110 < 1060:
-                b.append(f'<rect x="{x:.0f}" y="{gy}" width="110" height="90" rx="16" fill="none" stroke="{FWG}" stroke-width="2"/>')
+    b = []                                                                             # no root block: transparent like the rest
     body = Polygon(smooth([(520, 220), (560, 330), (700, 420), (790, 600), (740, 800), (540, 880), (340, 800), (290, 600), (380, 420), (480, 330)], 200, closed=True))
     b.append(outline(body, fill=WHITE, stroke=DEEP, w=LW * 1.8))
     b.append(P([(500, 230), (500, 300)], close=False, w=6))                                        # stylet in the neck
