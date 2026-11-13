@@ -25,7 +25,7 @@ def make(ink=(110,40,46),name='SFW-concert-tee-lineup'):
              ([f for f in glob.glob(M+'*.jpg') if 'Testate amoebae' in f][0],0.34,0.62,0.27,0.66,'TESTATE'),
              ([f for f in glob.glob(M+'*.jpg') if 'Amoeba cyst' in f][0],0.53,0.47,0.17,0.42,'AMOEBA'),
              ([f for f in glob.glob(M+'*.jpg') if 'Fungal spore' in f][0],0.47,0.47,0.30,0.72,'FUNGUS',75)]
-    pw,ph=660,1300; x0=(W-5*pw)//2; y0=1080
+    pw,ph=660,1300; x0=(W-5*pw)//2; y0=720
     for i,mm in enumerate(members):
         s,cx,cy,cw,ch=mm[:5]; rot=mm[6] if len(mm)>6 else 0
         A[y0:y0+ph,x0+i*pw:x0+(i+1)*pw]=panel(s,cx,cy,cw,ch,pw,ph,rot)
@@ -40,8 +40,12 @@ def make(ink=(110,40,46),name='SFW-concert-tee-lineup'):
     def spaced(y,t,size,sp,wt=600):
         f=ImageFont.truetype(B+f'ebg{wt}.ttf',size); tw=sum(d.textlength(c,font=f) for c in t)+sp*(len(t)-1); x=(W-tw)/2
         for c in t: d.text((x,y),c,font=f,fill=ink+(255,)); x+=d.textlength(c,font=f)+sp
-    spaced(80,'SOIL FOOD WEB',380,24)
-    spaced(760,'LIVE',150,60,500)
+    tsz=480
+    while True:
+        f=ImageFont.truetype(B+'ebg600.ttf',tsz); tw=sum(d.textlength(c,font=f) for c in 'SOIL FOOD WEB')+10*12
+        if tw<=5*pw: break
+        tsz-=4
+    spaced(140,'SOIL FOOD WEB',tsz,10)
     f=ImageFont.truetype(B+'ebg600.ttf',96)
     for i,m in enumerate(members):
         pass
@@ -52,7 +56,7 @@ def make(ink=(110,40,46),name='SFW-concert-tee-lineup'):
           ('AND INTRODUCING',56,500,22,1.9),
           (['TRICHODERMA','STREPTOMYCES','RHIZOBIUM','BACILLUS','MORTIERELLA'],64,500,5,1.7),
           (['ARTHROBOTRYS','COLPODA','VORTICELLA','ARCELLA','DIFFLUGIA','PROTURANS'],52,500,4,1.0)]
-    y=y0+ph+190; maxw=0.94*5*pw
+    y=y0+ph+150; maxw=0.94*5*pw
     for names,size,wt,sp,lh in rows:
         t=names if isinstance(names,str) else '  ·  '.join(names)
         while True:
@@ -60,10 +64,19 @@ def make(ink=(110,40,46),name='SFW-concert-tee-lineup'):
             if tw<=maxw: break
             size-=2
         spaced(y,t,size,sp,wt); y+=int(size*lh)
-    y+=170
-    d.line([(W/2-520,y),(W/2+520,y)],fill=ink+(255,),width=6); y+=90
-    spaced(y,'2027 WORLD TOUR',190,40,500); y+=290
-    spaced(y,'LIVE BENEATH YOUR FEET',110,30,500)
+    y+=150
+    d.rectangle([x0,y,x0+5*pw,y+12],fill=ink+(255,)); y+=70
+    spaced(y,'2027 WORLD TOUR',250,34,600); y+=360
+    d.rectangle([x0,y,x0+5*pw,y+12],fill=ink+(255,)); y+=70
+    spaced(y,'LIVE BENEATH YOUR FEET',120,30,500)
+    # worn vintage print: small cracks and specks knocked out of the ink
+    al=np.asarray(P.split()[3]).astype(np.float32)/255
+    r=np.random.default_rng(7)
+    n1=gaussian_filter(r.random((H,W)),2.2); n2=gaussian_filter(r.random((H,W)),14)
+    holes=(n1>np.percentile(n1,93))&(n2>np.percentile(n2,45))
+    cr=gaussian_filter(r.random((H,W)),1.0); holes|=(cr>np.percentile(cr,99.2))
+    al=np.where(holes,0,al)
+    P.putalpha(Image.fromarray(((al>0.5)*255).astype(np.uint8)))
     P=P.crop(P.getbbox()); P.save(B+name+'.png',icc_profile=ICC,dpi=(300,300)); return P
 if __name__=='__main__':
     P=make()
