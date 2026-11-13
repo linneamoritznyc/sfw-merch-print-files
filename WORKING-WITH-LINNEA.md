@@ -62,3 +62,6 @@ Keep it fast. Many short rounds are better than one big round. Send a preview af
 - Band and concert tees: never white. Black, grey, green or blue only.
 - Avoid looking "too computer": no perfect geometry, drop shadows or clip-art shapes.
 - Postcards are killed. Don't bring them back.
+- Never write "Look closer" on anything.
+- Festival lineup = real festival poster sizing: rows justified to full width, headliners huge, fewer words per row at the top.
+- Style she wants (poster grids 1-xx, flats board): giant EB Garamond words cropped or repeated in stacks, overlapping circles, arches and leaf shapes filled with duotone micrograph texture, grids, purple / greens / lime / lavender / brown / black / cream.
