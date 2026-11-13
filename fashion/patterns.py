@@ -86,6 +86,28 @@ def sprig(L, w):
     return unary_union([g, rot(radial(line([(0, 0), (L * .35, 0)], w * .7), 4), 45), disc((0, 0), w * 1.8)])
 
 
+def euglypha(L):
+    """Testate amoeba Euglypha: an oval shell of overlapping silica scales, a row of toothed scales at the aperture.
+    Returns (body, cut): cut is drawn in the ground colour to show the scale edges. Exactly mirror-symmetric."""
+    a, b = L * .3, L * .5
+    t = np.linspace(0, 2 * math.pi, 160)
+    shell = Polygon(np.c_[a * np.cos(t), b * np.sin(t)])
+    teeth = unary_union([Polygon([(x - L * .028, -b * .8), (x, -b * 1.0), (x + L * .028, -b * .8)]) for x in np.linspace(-a * .42, a * .42, 7)])
+    body = unary_union([shell, teeth, box(-a * .5, -b * .84, a * .5, -b * .74)])
+    sx = L * .1; sy = sx * .62
+    cuts = []
+    for r, y in enumerate(np.arange(-b * .72, b * 1.0, sy)):
+        off = 0 if r % 2 == 0 else sx / 2
+        for k in range(-6, 7):
+            x = k * sx + off
+            arc = [(x + sx / 2 * math.cos(q), y + sx / 2 * .9 * math.sin(q)) for q in np.linspace(0, math.pi, 24)]
+            cuts.append(line(arc, L * .016))
+    inner = shell.buffer(-L * .035)
+    cuts = unary_union(cuts).intersection(inner)
+    rim = line([(-a * .52, -b * .76), (a * .52, -b * .76)], L * .02)
+    return body, unary_union([cuts, rim])
+
+
 def flagellate(L):
     """Teardrop cell with a nucleus and a wavy flagellum, pointing up (-y)."""
     t = np.linspace(0, math.pi, 50)
@@ -201,7 +223,7 @@ def medallion_tile():
 
 def lattice_tile():
     T = 600
-    up, nu = flagellate(170)
+    up, nu = euglypha(190)
     dn, nd = rot(up, 180), rot(nu, 180)
     lines = unary_union([line([(-T, -T), (2 * T, 2 * T)], 7), line([(-T, 2 * T), (2 * T, -T)], 7),
                          line([(-T, T), (T, 3 * T)], 7), line([(T, -T), (3 * T, T)], 7), line([(-T, 0), (0, -T)], 7),
@@ -324,16 +346,6 @@ def main():
         t = pngs[("trim", way)]; t = t.resize((int(t.width * .3), int(t.height * .3)), Image.LANCZOS)
         sw.paste(fabric(t, 600, 160), (20 + j * 620, 20 + len(names) * 620))
     sw.save(os.path.join(OUT, "patterns", "swatch-board.png"))
-    # pants line-up
-    looks = [("medallion", "forest", "trim", "white", .09), ("lattice", "foodweb", "trim", "forest", .13), ("tile", "white", "trim", "foodweb", .12),
-             ("medallion", "white", "trim", "forest", .09), ("sprig", "forest", "trim", "foodweb", .2), ("lattice", "night", "trim", "night", .13)]
-    row = Image.new("RGB", (len(looks) * 540 + 20, 1100), WHITE)
-    for i, (p, w, tn, tw, sc) in enumerate(looks):
-        img = pants(pngs[(p, w)], pngs[(tn, tw)], sc)
-        img.save(os.path.join(OUT, "pants", f"pants-{p}-{w}.png"))
-        row.paste(img, (20 + i * 540, 10))
-    row.save(os.path.join(OUT, "pants", "pants-lineup.png"))
-
 
 if __name__ == "__main__":
     main()
