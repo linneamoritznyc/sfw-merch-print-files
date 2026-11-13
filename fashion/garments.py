@@ -36,6 +36,17 @@ def piece(polys, fill, outline=(70, 70, 70), extra=None, bg=(232, 232, 229)):
     return can
 
 
+def beanie_fill():
+    """Smaller mite, centred above the cuff, on plain knit ground."""
+    sys.path.insert(0, os.path.join(HERE, "..", "fine-art"))
+    import knit, cutouts
+    g, body, stripe, line = knit.YARNS["Mite"]
+    sw = knit.render(knit.chart(cutouts.mite, 48, 60, (11, 10, 26)), [g, body, stripe, line], np.random.default_rng(5)).convert("RGB")
+    sw = sw.resize((int(sw.width * .32), int(sw.height * .32)), Image.LANCZOS)
+    f = Image.new("RGB", (C, C), g); f.paste(sw, (166, 113))
+    return f
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     knit_mite = load(os.path.join(FA, "knit", "mite-swatch.png"), .45)
@@ -58,7 +69,7 @@ def main():
     # bucket hat in soil camo
     P["bucket-hat"] = piece([[(220, 230), (480, 230), (500, 400), (200, 400)], [(90, 400), (610, 400), (660, 500), (40, 500)]], tile(camo, C, C))
     # knit beanie with the mite
-    P["knit-beanie"] = piece([[(170, 560), (170, 300), (230, 180), (350, 140), (470, 180), (530, 300), (530, 560)]], tile(load(os.path.join(FA, "knit", "mite-swatch.png"), .32), C, C, -150, -70),
+    P["knit-beanie"] = piece([[(170, 560), (170, 300), (230, 180), (350, 140), (470, 180), (530, 300), (530, 560)]], beanie_fill(),
                              extra=lambda d: d.rectangle((170, 470, 530, 560), outline=(60, 60, 60), width=3))
     # crew socks, knit tardigrade
     sock = [(230, 80), (360, 80), (360, 470), (470, 520), (480, 620), (300, 620), (230, 560)]
