@@ -180,7 +180,7 @@ def three_groups(y, highlight):
 
 # ------------------------------------------------------------------ 4 flagellates
 def page_flagellate():
-    b = [header(4, "Flagellates", "The smallest and most numerous protozoa in soil",
+    b = [header(4, "Flagellates", "The smallest protozoa in soil",
                 "Protozoa  ·  for example Bodo, Cercomonas, Spumella")]
     cx, cy, s = 1000, 1120, 820
     body = smooth([(cx - s * .42, cy - s * .02), (cx - s * .2, cy - s * .2), (cx + s * .18, cy - s * .2), (cx + s * .42, cy - s * .02),
@@ -205,9 +205,9 @@ def page_flagellate():
     b.append(caption("A  A Bodo-type flagellate, about 1000x", W / 2, 1620))
     b.append(three_groups(1880, "Flagellates"))
     b.append(caption("B  The three protozoa groups, and how they move", W / 2, 2290))
-    b.append(facts([("Size", ["2 to 20 µm. Most are under 10 µm, a few times longer than a bacterium."]),
+    b.append(facts([("Size", ["The smallest protozoa. Bodo saltans, a common one, is about 5 to 8 µm long."]),
                     ("Where", ["The water films around soil particles."]),
-                    ("Eats", ["Bacteria, many thousands a day."]),
+                    ("Eats", ["Bacteria. The short flagellum sweeps food in, the long one drives the cell."]),
                     ("Role", ["Bacteria hold more nitrogen than a flagellate needs, so it releases the rest", "as ammonium, a form plant roots can take up."]),
                     ("At 400x", ["Tiny cells that jerk and spin fast. The flagella are often too thin to see.", "Count them by their quick, twitching movement."])], 2460))
     return finish("flagellate", "".join(b))
@@ -252,9 +252,9 @@ def page_amoeba():
         b.append(text(name, 38, x, y + 200, anchor="middle", fnt=G6, color=FWG)[0])
         b.append(text(how, 30, x, y + 245, anchor="middle")[0])
     b.append(caption("B  Shapes you will meet in soil", W / 2, 2340))
-    b.append(facts([("Size", ["About 10 to 100 µm. Many soil amoebae are small, 10 to 40 µm."]),
+    b.append(facts([("Size", ["Between flagellates and ciliates in size. About 10,000 to 100,000 live in a gram", "of soil."]),
                     ("Where", ["Water films and the tiny pores inside soil crumbs, where other", "predators cannot reach the bacteria."]),
-                    ("Eats", ["Bacteria, also yeasts, algae and small flagellates. It flows around", "its food and swallows it."]),
+                    ("Eats", ["Mainly bacteria. It flows around its food and swallows it."]),
                     ("Role", ["Releases plant-available nitrogen, like the other protozoa."]),
                     ("At 400x", ["A cell that slowly changes shape. Watch for a clear cap at the front", "and grainy cytoplasm flowing in behind it."])], 2510))
     return finish("amoeba", "".join(b))
@@ -321,14 +321,14 @@ def page_ciliate():
     for qx, qy in [(-1, -1), (1, -1), (-1, 1), (1, 1)]:
         b.append(P(blob(x2 + qx * 70, y + qy * 70, 62, [(45 * qx * qy, .05, .5)]), fill=LIGHT, stroke=FWG))
     b.append(text("Division cyst", 38, x2, y + 250, anchor="middle", fnt=G6, color=FWG)[0])
-    b.append(text("Splits into 2, 4 or more new cells.", 30, x2, y + 295, anchor="middle")[0])
+    b.append(text("Usually 4 new cells, sometimes 2 or 8.", 30, x2, y + 295, anchor="middle")[0])
     b.append(icon_ciliate(M + 1880, y, 520))
     b.append(text("Active cell", 38, M + 1880, y + 250, anchor="middle", fnt=G6, color=FWG)[0])
     b.append(text("Swims when the soil is wet.", 30, M + 1880, y + 295, anchor="middle")[0])
     b.append(caption("B  Three stages of Colpoda", W / 2, 2400))
-    b.append(facts([("Size", ["About 10 to 200 µm. Colpoda is usually 15 to 100 µm."]),
-                    ("Where", ["Water-filled pores and water films. Most numerous in wet soil."]),
-                    ("Eats", ["Bacteria, swept into the mouth by the cilia. Some eat other protozoa."]),
+    b.append(facts([("Size", ["Ciliates are the largest and least numerous protozoa. Some colpodeans,", "the group Colpoda belongs to, are as small as 10 µm."]),
+                    ("Where", ["Water-filled pores and water films."]),
+                    ("Eats", ["Bacteria, swept into the mouth by the cilia."]),
                     ("Role", ["Releases nitrogen like the other protozoa. In the Soil Food Web method,", "many ciliates point to soil that is short of oxygen."]),
                     ("At 400x", ["Fast, gliding swimmers that change direction often. Look for the", "fringe of cilia and the notch of the mouth."])], 2570))
     return finish("ciliate", "".join(b))
@@ -405,7 +405,7 @@ def page_bacteria():
     b += [label((M + 700, yb - 25), M + 520, yb - 210, ["Fungal hypha"], side="right"),
           label((fx + 2.5 * um, fy - 1.5 * um), fx + 120, yb - 210, ["Flagellate"], side="right")]
     b.append(caption("B  At 400x: bacteria next to a fungal hypha and a flagellate, all at the same size", W / 2, yb + 330))
-    b.append(facts([("Size", ["About 0.5 to 2 µm. Hundreds of millions to billions live in one gram of healthy soil."]),
+    b.append(facts([("Size", ["About 0.5 to 2 µm. 100 million to 1 billion live in a teaspoon of productive soil."]),
                     ("Eats", ["Mostly simple sugars and other easy food from roots and decaying material."]),
                     ("Role", ["Make sticky substances that glue soil particles into tiny crumbs, hold nutrients,", "and feed the protozoa and nematodes that release those nutrients to plants."]),
                     ("At 400x", ["Dots and short rods, some moving. You count bacteria, you do not identify them."])], 2760))
@@ -485,7 +485,7 @@ def page_arthropods():
           label((sx + 40, sy + 108), 1900, 1560, ["Spring, folded under the", "body, flicks it into a jump"], side="right"),
           label((sx - 240, sy + 150), 1300, 1460, ["6 legs"], side="left")]
     b.append(caption("B  Springtail, from the side", 1820, 1720))
-    b.append(facts([("Size", ["Most are 0.2 to 2 mm. Many are just visible to the eye."]),
+    b.append(facts([("Size", ["Oribatid mites 0.2 to 1 mm, springtails 0.2 to 5 mm. Many are just visible to the eye."]),
                     ("Where", ["Leaf litter, the top few centimetres of soil, and the larger pores."]),
                     ("Eats", ["Fungi, decaying plant material and bacteria. Some mites hunt nematodes and springtails."]),
                     ("Role", ["Shred litter so fungi and bacteria can reach it, spread spores, and release nutrients", "as they graze."]),

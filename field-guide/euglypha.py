@@ -302,7 +302,7 @@ def page():
     body.append(text("D  One scale", 40, M + 680, y2 + 320, anchor="middle", fnt="eb-garamond-latin-600-normal.woff2")[0])
     # facts
     fx, fy, fs = 1180, y2 - 250, 38
-    facts = [("Size", ["Shell about 30 to 100 µm long,", "depending on the species."]),
+    facts = [("Size", ["Shell about 20 to 100 µm long,", "depending on the species."]),
              ("Where", ["Moist soil, leaf litter and moss."]),
              ("Eats", ["Bacteria, fungi and small algae,", "caught with fine pointed pseudopods."]),
              ("Shell", ["Silica scales the cell makes itself.", "It stores a full new set before it divides."]),

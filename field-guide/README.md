@@ -17,3 +17,5 @@ Every page stays a DRAFT until an SFW mentor has checked it.
 
 Outputs in `out/`: full page SVG and PNG, a preview, and the end-on mouth as a standalone symmetric icon.
 Fonts: EB Garamond (OFL, licence in `fonts/`). Scientific names are set in italic, the convention in biology.
+
+Fact check: see `SOURCES.md` for each claim, its source, and what changed.
