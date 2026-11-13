@@ -222,7 +222,7 @@ def euglypha_mouth(c, R):
 
 def arcella_star(c, R, top):
     c = np.array(c, float)
-    line([top, (c[0], c[1] - R)], 3.5)
+    line([top, (c[0], c[1] + (R if top[1] > c[1] else -R))], 3.5)
     ring(c, R, R * .06)
     for rr in (R * .58, R * .8):
         n = int(rr / R * 24)
@@ -235,27 +235,33 @@ def arcella_star(c, R, top):
 
 
 # ------------------------------------------------------------------ card
+def place(g, o, rot):
+    from shapely import affinity
+    g = affinity.rotate(g, rot, origin=(0, 0))
+    return affinity.translate(g, *o)
+
+
 def frame():
+    from christmas_ornament import ornament
     m1, m2 = 64, 88
     for m, w in ((m1, 5), (m2, 2.4)):
         r = Polygon([(m, m), (W - m, m), (W - m, H - m), (m, H - m)])
         SHAPES.append(r.buffer(w / 2, join_style=2).difference(r.buffer(-w / 2, join_style=2)))
-    centre_ornament((W / 2, m2 + 18), 0, 1.0)
-    centre_ornament((W / 2, H - m2 - 18), math.pi, 1.0)
-    side_ornament((m2 + 14, H / 2), -math.pi / 2, .9)
-    side_ornament((W - m2 - 14, H / 2), math.pi / 2, .9)
-    corner((m2 + 26, m2 + 26), -math.pi / 4, .8)
-    corner((W - m2 - 26, m2 + 26), math.pi / 4, .8)
-    corner((W - m2 - 26, H - m2 - 26), 3 * math.pi / 4, .8)
-    corner((m2 + 26, H - m2 - 26), -3 * math.pi / 4, .8)
-    x = m2 + 22
-    for y0, y1 in ((330, H / 2 - 360), (H / 2 + 360, H - 330)):
+    big, small = ornament(1.0), ornament(.58)
+    SHAPES.append(place(big, (W / 2, m2 + 16), 0))
+    SHAPES.append(place(big, (W / 2, H - m2 - 16), 180))
+    SHAPES.append(place(small, (m2 + 14, H / 2), -90))
+    SHAPES.append(place(small, (W - m2 - 14, H / 2), 90))
+    for c in ((m2 + 22, m2 + 22), (W - m2 - 22, m2 + 22), (m2 + 22, H - m2 - 22), (W - m2 - 22, H - m2 - 22)):
+        disc(c, 9)
+    x = m2 + 24
+    for y0, y1 in ((150, H / 2 - 300), (H / 2 + 300, H - 150)):
         for xx in (x, W - x):
             swell([(xx, y) for y in np.linspace(y0, y1, 60)], 1, 4, 1, peak=.5)
-    actinophrys((330, 560), 92); euglypha_mouth((W - 330, 560), 88)
-    euglypha_mouth((330, H - 560), 88); actinophrys((W - 330, H - 560), 92)
-    arcella_star((W / 2, 560), 70, (W / 2, 330))
-    arcella_star((W / 2, H - 560), 70, (W / 2, H - 330))
+    actinophrys((320, 590), 104); euglypha_mouth((W - 320, 590), 100)
+    euglypha_mouth((320, H - 590), 100); actinophrys((W - 320, H - 590), 104)
+    arcella_star((W / 2, 600), 80, (W / 2, 445))
+    arcella_star((W / 2, H - 600), 80, (W / 2, H - 445))
 
 
 def to_d(g):
@@ -274,9 +280,9 @@ def build():
 def card(d, with_text=True, bg=True):
     body = (f'<rect width="{W}" height="{H}" fill="{GREEN}"/>' if bg else "") + f'<path fill="{INK}" fill-rule="evenodd" d="{d}"/>'
     if with_text:
-        for t, sz, y in (("Merry Christmas", 124, 980), ("&", 92, 1110), ("Happy New Year", 124, 1250)):
+        for t, sz, y in (("Merry Christmas", 124, 950), ("&", 92, 1075), ("Happy New Year", 124, 1215)):
             body += text(t, sz, W / 2, y, anchor="middle", color=INK)[0]
-        body += text("SOIL FOOD WEB FOUNDATION", 28, W / 2, 1390, fnt="eb-garamond-latin-600-normal.woff2", anchor="middle", color=INK, track=240)[0]
+        body += text("SOIL FOOD WEB FOUNDATION", 28, W / 2, 1335, fnt="eb-garamond-latin-600-normal.woff2", anchor="middle", color=INK, track=240)[0]
     return f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">{body}</svg>\n'
 
 
