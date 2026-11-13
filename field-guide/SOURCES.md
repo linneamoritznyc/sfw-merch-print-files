@@ -67,3 +67,29 @@ Every fact on the pages now has a source. The drawings are SFW's own constructio
 | Pinnularia | valve with raphe, central area and nodule, broad striae perpendicular to the raphe | https://researcharchive.calacademy.org/research/diatoms/genera/pinnularia/index.html ; https://micrographia.com/specbiol/alg/diato/diat0200.htm |
 | Nostoc | bead-like trichomes in a gelatinous sheath, intercalary heterocysts with thick walls, akinetes midway between heterocysts | https://fmp.conncoll.edu/Silicasecchidisk/LucidKeys3.5/Keys_v3.5/Carolina35_Key/Media/Html/Nostoc_Main.html ; https://pmc.ncbi.nlm.nih.gov/articles/PMC3911061/figure/F1 |
 | Dictyostelium | fruiting body: basal disc, stalk of cells, cup, sorus of spores; migrating slug stage | https://evodevojournal.biomedcentral.com/track/pdf/10.1186/2041-9139-5-34 ; https://www.frontiersin.org/journals/cell-and-developmental-biology/articles/10.3389/fcell.2021.692473/epub |
+
+## Graphics set 4 (graphics_set4.py)
+| Graphic | Features checked | Source |
+|---|---|---|
+| Nebela | pear-shaped shell covered in circular to elongated plates recycled from euglyphid prey, aperture with organic collar | https://arcella.nl/nebela-mitchell-key/ ; https://arcella.nl/nebela-collaris |
+| Assulina | yellow to brown compressed ovoid shell of imbricate oval siliceous plates, terminal oval aperture with irregularly toothed margin | https://web.nies.go.jp/chiiki1/protoz/morpho/testacea/assulina.htm ; https://arcella.nl/assulina-muscorum/ |
+| Paramecium | slipper shape, cilia, oral groove, macronucleus and micronucleus, contractile vacuoles with radiating canals | standard protozoology; checked against Leuckart & Nitsche chart LXV (Dolan 2023) |
+| Chlamydomonas | two equal anterior flagella with two contractile vacuoles at their base, cup-shaped chloroplast with pyrenoid, red eyespot, central nucleus in the cup | https://biologynotesonline.com/chlamydomonas-life-cycle-habitat-structure-examples/ ; https://www.nies.go.jp/chiiki1/protoz/morpho/flagella/chla-nas.htm |
+| Actinophrys | spherical, vacuolated outer cytoplasm, one central nucleus, stiff axopodia arising from the nucleus surface, contractile vacuole bulge | https://en.wikipedia.org/wiki/Actinophryid ; https://www.nies.go.jp/chiiki1/protoz/morpho/heliozoa/actinoph.htm |
+| Vampyrella | orange cell body, radiating filopodia, dissolves a hole in an algal cell wall and extracts the contents | https://arcella.nl/vampyrellidae/ ; https://wikipedia.com/wiki/Vampyrellida |
+| Rhizopus | stolons, rhizoids at the nodes, sporangiophores in groups, sporangia with apophysis and columella | https://biologynotesonline.com/rhizopus-spp-structure-life-cycle-habitat-pathogenesis/ ; https://drfungus.org/knowledge-base/rhizopus-microsporus-var-rhizopodiformis/ |
+| Alternaria | dark muriform conidia with transverse and longitudinal septa, tapering beak, acropetal chains | https://drfungus.org/?p=123 ; https://www.facesoffungi.org/alternaria-tenuissima/ |
+| Basidium | four sterigmata each bearing a basidiospore, hilar appendix at the spore base | https://en.Wikipedia.com/wiki/Basidia ; https://faculty.ucr.edu/~legneref/fungi/mycoglossary.htm |
+| AM fungal spore | spore at the end of a hypha, wall layers continuous with the subtending hypha, hypha closed by a septum | https://zor.zut.edu.pl/Glomeromycota/Development%20of%20Glomus.html ; https://invam.ku.edu/glomeraceae |
+| Yeast | budding cells, bud scars, vacuole | standard mycology |
+| Pythium | coenocytic hyphae, sporangium with exit tube and thin vesicle where zoospores form, oogonium with thick-walled oospore and antheridium | https://apsnet.org/edcenter/Pages/IntroOomycetes.aspx ; https://plantpath.psu.edu/pythium/module-1/pythium |
+| Root-knot nematode | white, pear-shaped female with a prominent neck, sedentary in the root | https://nemaplex.ucdavis.edu/Taxadata/meloidae.htm ; https://web.nies.go.jp/chiiki1/protoz/morpho/nematoda/n-meloid.htm |
+| Dorylaim head | hollow movable odontostyle with guiding ring | https://nemaplex.ucdavis.edu/Taxadata/Doryidae.htm ; https://web.nies.go.jp/chiiki1/protoz/morpho/nematoda/n-mesodo.htm |
+| Potworm (enchytraeid) | white to colourless body, four setal bundles per segment of straight setae, clitellum | https://www.nies.go.jp/chiiki1/protoz/morpho/oligocha/o-enchyt.htm ; https://soil.evs.buffalo.edu/index.php/Pot_Worms |
+| Predatory mite | Mesostigmata as generalist predators of nematodes and springtails | https://profils-profiles.science.gc.ca/en/publication/predation-suspended-and-forest-floor-soils-observations-australian-mesostigmatic-mites |
+| Pseudoscorpion | eight legs, long pedipalps with chelae (venom in the movable finger), no tail | https://ipfs.ssi.eecc.de/ipns/en.wikipedia-on-ipfs.org/wiki/Pseudoscorpion ; https://museum.wa.gov.au/catalogues/node/15759 |
+| Bacillus endospores | spore positions central, subterminal, terminal, and terminal swelling the sporangium (species not named, sources disagree) | https://easybiologyclass.com/bacterial-endospore-definition-characteristics-structure-and-its-formation/ ; https://bio.libretexts.org/Courses/Irvine_Valley_College/IVC_Microbiology_Lab_Manual/27%3A_ENDOSPORE_STAIN |
+| Myxobacteria | Chondromyces fruiting body: stalk with sporangioles arrayed around the head, myxospores inside | https://pmc.ncbi.nlm.nih.gov/articles/PMC250104 ; https://repository.helmholtz-hzi.de/handle/10033/623311 |
+| Lichen section | upper cortex, algal layer, medulla, lower cortex, rhizines | https://ohioplants.org/lichen-biology/ ; https://anbg.gov.au/lichen/form-structure.html |
+
+Colour note: Chlamydomonas eyespot (red) and Vampyrella (orange) use their true colours, outside the brand palette.
