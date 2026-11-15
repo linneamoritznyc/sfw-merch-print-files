@@ -60,7 +60,7 @@ def job(outdir, slug, model, k):
 def main():
     outdir = sys.argv[1]; slugs = sys.argv[2:] or list(CHARS)
     os.makedirs(outdir, exist_ok=True)
-    jobs = [(slug, m, k) for slug in slugs for m in ("recraft-ai/recraft-v3", "black-forest-labs/flux-1.1-pro") for k in range(3)]
+    jobs = [(slug, m, k) for slug in slugs for m in ("recraft-ai/recraft-v3", "black-forest-labs/flux-1.1-pro") for k in range(2)]
     with cf.ThreadPoolExecutor(6) as ex:
         futs = {ex.submit(job, outdir, *j): j for j in jobs}
         for f in cf.as_completed(futs):
