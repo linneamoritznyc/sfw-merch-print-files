@@ -38,7 +38,7 @@ Linnea's boards for the SFW lifestyle line. Notes only, nothing designed from th
 
 ## Reference: poster grid from the other session (1-01 to 1-24)
 - Huge EB Garamond words: AMOEBA, BACTERIA, FUNGI, HYPHAE, PROTOZOA, TESTATE, SOIL, LOOK CLOSER. Repeated in stacks, cropped off the edge, or set as thin outline type.
-- Micrographs cut into simple shapes (arch, circle, half circle, leaf, rounded tab), often with a halftone screen.
+- Micrographs cut into simple shapes (circle, half circle, leaf, rounded tab; never arches), often with a halftone screen.
 - Flat colour shapes layered over them: green, purple, lavender, lime, brown, blue, pink.
 - Fine white grid over some backgrounds. Small "400x" labels and photographer credits.
 - Grounds: purple, deep green, black, lime, sage grey, white.
